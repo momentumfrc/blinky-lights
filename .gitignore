@@ -1,0 +1,6 @@
+2018 Robot/build
+2018 Robot/dist
+AnimationController/bin
+AnimationTest/bin
+LightsClient/data/*.ogg
+*.class
