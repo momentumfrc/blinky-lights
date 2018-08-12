@@ -159,22 +159,25 @@ public class TestDisplay {
 		};
 		
 		AnimationSequence momentum = new AnimationSequence(new Animation[] {
-				Snake.twoColorSnake(Color.MOMENTUM_PURPLE, Color.MOMENTUM_BLUE, 1, 5, 2, 125),
+				Snake.twoColorSnake(Color.MOMENTUM_PURPLE, Color.MOMENTUM_BLUE, 1, 5, 2, 40),
 				new Fade(new Color[]{Color.MOMENTUM_BLUE, Color.WHITE, Color.MOMENTUM_PURPLE}, 200, 0),
 				new Bounce(Color.MOMENTUM_PURPLE, Color.MOMENTUM_BLUE, 8, 20, 50),
-				new Bounce(Color.WHITE, new Color[] {Color.MOMENTUM_PURPLE, Color.MOMENTUM_PURPLE, Color.MOMENTUM_BLUE, Color.MOMENTUM_BLUE}, 20, 50)
+				new BounceStack(new Color[] {Color.MOMENTUM_PURPLE, Color.MOMENTUM_PURPLE, Color.MOMENTUM_BLUE, Color.MOMENTUM_BLUE}, 8, 40),
 		}, new int[] {5000, 5000, 10000, 5000});
 		
 		AnimationSequence rainbow = new AnimationSequence(new Animation[] {
 				Snake.rainbowSnake(70),
 				Fade.rainbowFade(100, 20),
-				Snake.rainbowSnake(150),
-				Fade.rainbowFade(200, 0),
 				new Bounce(Color.WHITE, rainbowcolors, 20, 50),
-				new Stack(rainbowcolors, 25, 40)
-		}, new int[] {5000, 5000, 1000, 6000, 10000, 20000});
+				new Stack(rainbowcolors, 25, 40),
+				new BounceStack(rainbowcolors, 7, 40)
+		}, new int[] {5000, 5000, 10000, 10000, 10000});
+		
+		Animation bstack = new BounceStack(rainbowcolors, 5, 50);
 		
 		//an.setAnimation(new SocketListener());
+		
+		BrightnessFilter.setBrightness(1);
 		an.setAnimation(rainbow);
 		
 		

@@ -26,9 +26,13 @@ public class BrightnessFilter {
 		
 	}
 	
+	public static void setBrightness(double brightness) {
+		BrightnessFilter.brightness = truncate(brightness);
+	}
+	
 
 	
-	private double truncate(double in) {
+	private static double truncate(double in) {
 		if(in > 1) return 1;
 		if(in < 0) return 0;
 		return in;

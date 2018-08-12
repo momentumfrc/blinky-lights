@@ -40,7 +40,13 @@ class AnimatorThread extends Thread {
 			
 			// Account for transmission time before delaying
 			delay -= (System.currentTimeMillis() - millis);
-			if (delay > 0) Timer.delay(delay / 1000.0);
+			if (delay > 0) {
+				try {
+					Thread.sleep(delay);
+				} catch (InterruptedException e) {
+					break;
+				}
+			}
 		}
 	}
 }
