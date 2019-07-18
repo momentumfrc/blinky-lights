@@ -38,7 +38,17 @@
 
 */
 
+#if defined(ARDUINO_AVR_UNO)
+#define PIN 1
+#define MAXLEDS 240
+
+#elif defined(ARDUINO_AVR_PRO)
 #define PIN 3
+#define MAXLEDS 240
+
+#else
+#error unsupported board.  Please add to code.
+#endif
 
 const uint32_t dimRED = 0x200000;
 const uint32_t dimGREEN = 0x002000;
@@ -174,7 +184,7 @@ uint32_t getRGB(uint8_t rgb[]) {
 void paintPattern(int address, uint32_t rgb, int count, int stride, int limit) {
   if (limit == 0 || limit > strip.numPixels())
     limit = strip.numPixels();
-    
+
   do {
     for (int i = 0; i < count; ++i) {
       int pixel = address + i;
