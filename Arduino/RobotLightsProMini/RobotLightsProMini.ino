@@ -24,6 +24,7 @@
    - 0x02 : pixel address ; RGB : set single pixel at address with value RGB
    - 0x03 : start address ; RGB ; length : set "length" pixels starting at "start" with value RGB
    - 0x04 : start address ; RGB ; length ; stride : set "length" pixels starting at "start" with value RGB.  Repeat every "stride" pixels.
+   - 0x05 : start address ; RGB ; length ; stride ; max length : same as 0x04, but will stop after max length pixels
 
    Error rejection/correction:
    - Invalid packets will be rejected and packet parsing will begin again with next byte in stream.
@@ -127,13 +128,13 @@ void parsePayload(int len) {
 
     case 2: // set single pixel
       if (len == 5)
-        paintPattern(address, rgb, 1, 0);
+        paintPattern(address, rgb, 1, 0, 0);
       break;
 
     case 3: // set run of pixels
       if (len == 6) {
         int count = payload[5];
-        paintPattern(address, rgb, count, 0);
+        paintPattern(address, rgb, count, 0, 0);
       }
       break;
 
@@ -141,7 +142,16 @@ void parsePayload(int len) {
       if (len == 7) {
         int count = payload[5];
         int stride = payload[6];
-        paintPattern(address, rgb, count, stride);
+        paintPattern(address, rgb, count, stride, 0);
+      }
+      break;
+
+    case 5: // set run of pixels with stride and limit
+      if (len == 8) {
+        int count = payload[5];
+        int stride = payload[6];
+        int maxlength = payload[7];
+        paintPattern(address, rgb, count, stride, address + maxlength);
       }
       break;
 
@@ -160,14 +170,17 @@ uint32_t getRGB(uint8_t rgb[]) {
 }
 
 // stride of 0 will paint once and exit (instead of infinite loop)
-// stride >0 will repeat pattern until end of strip
-void paintPattern(int address, uint32_t rgb, int count, int stride) {
+// stride >0 will repeat pattern until last pixel (limit)
+void paintPattern(int address, uint32_t rgb, int count, int stride, int limit) {
+  if (limit == 0 || limit > strip.numPixels())
+    limit = strip.numPixels();
+    
   do {
     for (int i = 0; i < count; ++i) {
       int pixel = address + i;
-      if (pixel < strip.numPixels())
+      if (pixel < limit)
         strip.setPixelColor(pixel, rgb);
     }
     address += stride;
-  } while (address < strip.numPixels() && stride > 0);
+  } while (address < limit && stride > 0);
 }
