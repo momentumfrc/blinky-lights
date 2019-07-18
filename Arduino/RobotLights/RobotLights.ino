@@ -38,6 +38,8 @@
 
 */
 
+// Max pixels on Trinket is 94 due to RAM limits
+
 #if defined(ARDUINO_AVR_UNO)
 #define PIN 1
 #define MAXLEDS 240
@@ -64,8 +66,7 @@ const uint32_t dimWHITE = 0x202020;
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
 
-// Max pixels on Trinket is 94 due to RAM limits
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(240, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(MAXLEDS, PIN, NEO_GRB + NEO_KHZ800);
 
 // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
 // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
