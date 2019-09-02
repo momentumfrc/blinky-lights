@@ -1,8 +1,6 @@
 #include <Wire.h>
 #include <Adafruit_NeoPixel.h>
-#ifdef __AVR__
-#include <avr/power.h>
-#endif
+#include <avr/wdt.h>
 
 /*
    I2C controlled NeoPixel driver
@@ -75,9 +73,29 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(MAXLEDS, PIN, NEO_GRB + NEO_KHZ800);
 
 const int MAX_PAYLOAD = 15;
 uint8_t payload[MAX_PAYLOAD];
+uint32_t lastPacket;
 
 void setup() {
+  lastPacket = millis();
+
   strip.begin();
+  Wire.begin(16);     // join i2c bus with address #16
+  Wire.onReceive(onReceive);
+
+  wdt_enable(WDTO_500MS); // Set the watchdog timer to 500ms
+}
+
+void loop() {
+  wdt_reset(); // Feed the watchdog
+
+  // Check for comms timeout from RoboRIO
+  if (millis() - lastPacket > 1000)
+    showTestPattern();
+
+  delay(100);
+}
+
+void showTestPattern() {
   for (int i = 0; i < strip.numPixels();)
   {
     strip.setPixelColor(i++, dimRED);
@@ -86,12 +104,6 @@ void setup() {
     strip.setPixelColor(i++, dimWHITE);
   }
   strip.show();       // Initialize all pixels to RGBW test pattern
-  Wire.begin(16);     // join i2c bus with address #16
-  Wire.onReceive(onReceive);
-}
-
-void loop() {
-  delay(100);
 }
 
 void onReceive(int howMany) {
@@ -117,6 +129,7 @@ void onReceive(int howMany) {
       if (payloadIx == payloadLen) {
         parsePayload(payloadLen);
         payloadLen = 0;
+        lastPacket = millis(); // reset comms timeout
       }
     }
   }
