@@ -1,8 +1,10 @@
 package org.usfirst.frc.team4999.lights;
 
-import org.usfirst.frc.team4999.lights.Color;
+import java.util.Arrays;
+
 import org.usfirst.frc.team4999.lights.animations.Animation;
 import org.usfirst.frc.team4999.lights.animations.Solid;
+import org.usfirst.frc.team4999.lights.commands.Command;
 
 /**
  * Runs in an infinite loop. Displays a frame of {@link Animation}, then waits the duration specified by the animation
@@ -31,7 +33,9 @@ class AnimatorThread extends Thread {
 			// This way, if current is overwritten by setAnimation mid-loop, the code is using a local reference that isn't overwritten
 			Animation animation = current;
 			// show current frame
-			out.show(animation.getNextFrame());
+			Command[] commands = animation.getNextFrame();
+			Packet[] builtCommands = Arrays.stream(commands).map(Command::build).toArray(Packet[]::new);
+			out.show(builtCommands);
 			// get how long to delay for
 			int delay = animation.getFrameDelayMilliseconds();
 			

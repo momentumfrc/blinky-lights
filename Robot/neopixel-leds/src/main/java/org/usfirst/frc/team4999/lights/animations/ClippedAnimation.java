@@ -2,8 +2,7 @@ package org.usfirst.frc.team4999.lights.animations;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team4999.lights.Commands;
-import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.*;
 
 public class ClippedAnimation implements Animation {
 
@@ -11,36 +10,32 @@ public class ClippedAnimation implements Animation {
     private int startidx;
     private int totallength;
 
-    private ArrayList<Packet> packetbuffer;
+    private ArrayList<Command> commandBuffer;
 
     public ClippedAnimation(Animation animation, int startidx, int totallength) {
         this.animation = animation;
-        packetbuffer = new ArrayList<Packet>();
+        commandBuffer = new ArrayList<>();
 
         this.startidx = startidx;
         this.totallength = totallength;
     }
 
     @Override
-    public Packet[] getNextFrame() {
-        packetbuffer.clear();
+    public Command[] getNextFrame() {
+        commandBuffer.clear();
         
-        Packet[] animationPackets = animation.getNextFrame();
+        Command[] animationPackets = animation.getNextFrame();
         for(int i = 0; i < animationPackets.length; i++) {
-            Packet curr = animationPackets[i];
-            Packet[] clipped =  Commands.clipPacketRange(curr, startidx, totallength);
+            Command curr = animationPackets[i];
             if(curr != null) {
+                Command[] clipped = curr.clip(startidx, totallength);
                 for(int j = 0; j < clipped.length; j++) {
-                    packetbuffer.add(clipped[j]);
+                    commandBuffer.add(clipped[j]);
                 }
             }
         }
 
-        Packet[] outpackets = new Packet[packetbuffer.size()];
-        for(int i = 0; i < packetbuffer.size(); i++) {
-            outpackets[i] = packetbuffer.get(i);
-        }
-        return outpackets;
+        return commandBuffer.toArray(new Command[]{});
     }
 
     @Override

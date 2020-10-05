@@ -1,6 +1,6 @@
 package org.usfirst.frc.team4999.lights.animations;
 
-import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.Command;
 
 public interface Animation {
 	/**
@@ -8,7 +8,7 @@ public interface Animation {
 	 * @param pixels Current state of pixels
 	 * @return The new state of pixels
 	 */
-	Packet[] getNextFrame();
+	Command[] getNextFrame();
 	/**
 	 * Gets time to wait before calling getNextFrame. Returns -1 to indicate getNextFrame() should only be called once
 	 * @return The delay to wait for in milliseconds

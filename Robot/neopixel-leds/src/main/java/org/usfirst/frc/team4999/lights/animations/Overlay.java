@@ -2,7 +2,7 @@ package org.usfirst.frc.team4999.lights.animations;
 
 import java.util.ArrayList;
 
-import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.*;
 
 public class Overlay implements Animation {
 
@@ -13,7 +13,7 @@ public class Overlay implements Animation {
         public Animation animation;
         public int remainingDelay;
         public boolean resetTiming;
-        public Packet[] currentFrame;
+        public Command[] currentFrame;
         
         private AnimationTiming(Animation animation) {
             this.animation = animation;
@@ -24,7 +24,7 @@ public class Overlay implements Animation {
     }
 
     private AnimationTiming[] animations;
-    private ArrayList<Packet> packetBuffer;
+    private ArrayList<Command> commandBuffer;
 
     /**
      * Sends all the packets for all the animations. Animations with lower indices have their packets sent first.
@@ -35,28 +35,23 @@ public class Overlay implements Animation {
             this.animations[i] = new AnimationTiming(animations[i]);
         }
 
-        packetBuffer = new ArrayList<Packet>();
+        commandBuffer = new ArrayList<>();
     }
 
     @Override
-    public Packet[] getNextFrame() {
-        packetBuffer.clear();
+    public Command[] getNextFrame() {
+        commandBuffer.clear();
         
         for(int i = 0; i < animations.length; i++) { 
             if(animations[i].resetTiming) {
                 animations[i].currentFrame = animations[i].animation.getNextFrame();
             }
             for(int j = 0; j < animations[i].currentFrame.length; j++) {
-                packetBuffer.add(animations[i].currentFrame[j]);
+                commandBuffer.add(animations[i].currentFrame[j]);
             }
         }
 
-        Packet[] outArr = new Packet[packetBuffer.size()];
-        for(int i = 0; i < packetBuffer.size(); i++) {
-            outArr[i] = packetBuffer.get(i);
-        }
-
-        return outArr;
+        return commandBuffer.toArray(new Command[]{});
     }
 
     @Override

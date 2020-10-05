@@ -1,8 +1,11 @@
 package org.usfirst.frc.team4999.tools;
 
+import java.util.Arrays;
+
 import org.usfirst.frc.team4999.lights.*;
 import org.usfirst.frc.team4999.lights.animations.Animation;
 import org.usfirst.frc.team4999.lights.animations.Solid;
+import org.usfirst.frc.team4999.lights.commands.Command;
 
 public class TestAnimator extends Animator {
 	
@@ -35,7 +38,9 @@ public class TestAnimator extends Animator {
     
     public void displayFrames(int numFrames) {
         for(int i = 0; i < numFrames; i++) {
-			display.show(current.getNextFrame());
+            Command[] commands = current.getNextFrame();
+			Packet[] builtCommands = Arrays.stream(commands).map(Command::build).toArray(Packet[]::new);
+			display.show(builtCommands);
 			int delay = current.getFrameDelayMilliseconds();
 			
 			if(delay < 0 ) System.out.println("Animation returned a delay less than 0... interpreting as no delay");
@@ -53,7 +58,9 @@ public class TestAnimator extends Animator {
 
     public void stepFrames(int numFrames) {
         for(int i = 0; i < numFrames; i++) {
-			display.show(current.getNextFrame());
+			Command[] commands = current.getNextFrame();
+			Packet[] builtCommands = Arrays.stream(commands).map(Command::build).toArray(Packet[]::new);
+			display.show(builtCommands);
 			int delay = current.getFrameDelayMilliseconds();
 			
 			if(delay < 0 ) System.out.println("Animation returned a delay less than 0... interpreting as no delay");

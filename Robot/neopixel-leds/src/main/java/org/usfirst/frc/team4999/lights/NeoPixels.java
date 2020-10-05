@@ -3,6 +3,9 @@ package org.usfirst.frc.team4999.lights;
 
 import java.nio.ByteBuffer;
 
+import org.usfirst.frc.team4999.lights.commands.ShowCommand;
+import org.usfirst.frc.team4999.lights.commands.SyncCommand;
+
 import edu.wpi.first.wpilibj.I2C;
 
 class NeoPixelsIO extends I2C {
@@ -57,8 +60,8 @@ public class NeoPixels implements Display {
 	private NeoPixels() {
 		strip = new NeoPixelsIO(I2C.Port.kOnboard, I2C_ADDRESS);
 		
-		syncPacket = Commands.makeSyncPacket();
-		showPacket = Commands.makeShowPacket();
+		syncPacket = new SyncCommand().build();
+		showPacket = new ShowCommand().build();
 	}
 	
 	synchronized public void show(Packet[] commands) {

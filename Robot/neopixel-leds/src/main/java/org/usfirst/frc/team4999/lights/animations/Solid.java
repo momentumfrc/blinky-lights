@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4999.lights.animations;
 
 import org.usfirst.frc.team4999.lights.Color;
-import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.Command;
 
 import static org.usfirst.frc.team4999.lights.AnimationUtils.*;
 
@@ -44,7 +44,7 @@ public class Solid implements Animation {
 	}
 
 	@Override
-	public Packet[] getNextFrame() {
+	public Command[] getNextFrame() {
 		return displayColorBuffer(colors);
 	}
 

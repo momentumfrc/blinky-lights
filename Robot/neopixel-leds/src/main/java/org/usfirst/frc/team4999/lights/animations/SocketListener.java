@@ -10,6 +10,8 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
 import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.Command;
+import org.usfirst.frc.team4999.lights.commands.RawCommand;
 
 public class SocketListener implements Animation {
 	
@@ -85,12 +87,12 @@ public class SocketListener implements Animation {
 	}
 
 	@Override
-	public Packet[] getNextFrame() {
+	public Command[] getNextFrame() {
 		synchronized(completedPackets) {
 			//System.out.println(completedPackets);
-			Packet[] out = new Packet[completedPackets.size()];
+			Command[] out = new Command[completedPackets.size()];
 			for(int i = 0; i < out.length; i++) {
-				out[i] = completedPackets.get(i);
+				out[i] = new RawCommand(completedPackets.get(i));
 			}
 			return out;
 		}

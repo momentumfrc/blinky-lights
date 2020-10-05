@@ -1,8 +1,7 @@
 package org.usfirst.frc.team4999.lights.animations;
 
 import org.usfirst.frc.team4999.lights.Color;
-import org.usfirst.frc.team4999.lights.Commands;
-import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.*;
 
 public class Bounce implements Animation {
 	
@@ -57,11 +56,11 @@ public class Bounce implements Animation {
 	}
 
 	@Override
-	public Packet[] getNextFrame() {
-		Packet[] out = new Packet[1+pos.length];
-		out[0] = Commands.makeStride(0, background, 1, 1);
+	public Command[] getNextFrame() {
+		Command[] out = new Command[1+pos.length];
+		out[0] = new StrideCommand(0, background, 1, 1);
 		for(int i = 0; i < pos.length; i++) {
-			out[i+1] = Commands.makeStride(pos[i], run[i], 1, area);
+			out[i+1] = new StrideCommand(pos[i], run[i], 1, area);
 		}
 		for(int i = 0; i < v.length; i++) {
 			if(pos[i] >= area)

@@ -1,8 +1,7 @@
 package org.usfirst.frc.team4999.lights.animations;
 
 import org.usfirst.frc.team4999.lights.Color;
-import org.usfirst.frc.team4999.lights.Commands;
-import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.*;
 
 public class RandomColors implements Animation {
 	
@@ -24,11 +23,11 @@ public class RandomColors implements Animation {
 	}
 	
 	@Override
-	public Packet[] getNextFrame() {
-		Packet[] out = new Packet[repeat];
+	public Command[] getNextFrame() {
+		Command[] out = new Command[repeat];
 		for(int i = 0; i < out.length; i++) {
 			Color paint = new Color(randomRGB(), randomRGB(), randomRGB());
-			out[i] = Commands.makeStride(i, paint, 1, repeat );
+			out[i] = new StrideCommand(i, paint, 1, repeat );
 		}
 		return out;
 	}

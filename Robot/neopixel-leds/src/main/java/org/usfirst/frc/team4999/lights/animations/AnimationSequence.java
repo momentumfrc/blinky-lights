@@ -1,6 +1,6 @@
 package org.usfirst.frc.team4999.lights.animations;
 
-import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.Command;
 
 public class AnimationSequence implements Animation {
 	
@@ -43,7 +43,7 @@ public class AnimationSequence implements Animation {
 	}
 
 	@Override
-	public Packet[] getNextFrame() {
+	public Command[] getNextFrame() {
 		if(System.currentTimeMillis() - startTime >= times[currentidx]) {
 			startTime = System.currentTimeMillis();
 			currentidx = (currentidx + 1) % times.length;

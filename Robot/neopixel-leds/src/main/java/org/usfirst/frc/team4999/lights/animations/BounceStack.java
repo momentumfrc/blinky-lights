@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4999.lights.animations;
 
 import org.usfirst.frc.team4999.lights.Color;
-import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.*;
 
 import static org.usfirst.frc.team4999.lights.AnimationUtils.*;
 
@@ -34,7 +34,7 @@ public class BounceStack implements Animation {
 	}
 
 	@Override
-	public Packet[] getNextFrame() {
+	public Command[] getNextFrame() {
 		
 		currentcolor = buffer[currentidx];
 		buffer[currentidx] = background;

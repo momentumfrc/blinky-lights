@@ -1,8 +1,7 @@
 package org.usfirst.frc.team4999.lights.animations;
 
 import org.usfirst.frc.team4999.lights.Color;
-import org.usfirst.frc.team4999.lights.Commands;
-import org.usfirst.frc.team4999.lights.Packet;
+import org.usfirst.frc.team4999.lights.commands.*;
 
 public class Blink implements Animation {
 	
@@ -39,8 +38,8 @@ public class Blink implements Animation {
 	}
 
 	@Override
-	public Packet[] getNextFrame() {
-		Packet out[] =  {Commands.makeStride(0, colors[idx], 1, 1)};
+	public Command[] getNextFrame() {
+		Command out[] =  {new StrideCommand(0, colors[idx], 1, 1)};
 		idx = (idx + 1) % waittimes.length;
 		return out;
 	}
