@@ -57,7 +57,7 @@
     <repository>
         <id>github</id>
         <name>Momentum Github Repository</name>
-        <url>file://${project.build.directory}/../../mvn-repo</url>
+        <url>file://${project.build.directory}/../../Momentum-Tools/mvn-repo</url>
     </repository>
   </distributionManagement>
   
