@@ -1,0 +1,2 @@
+# LightsClient
+This is a Processing program that uses the AnimationController library to connect to the robot over the network and dynamically generate animations based on the amplitude of a playing sound file.
