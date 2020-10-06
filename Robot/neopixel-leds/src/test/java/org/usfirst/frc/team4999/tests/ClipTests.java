@@ -20,7 +20,7 @@ public class ClipTests {
 
 			@Override
 			public Command[] getNextFrame() {
-				return new Command[] {new StrideCommand(0, Color.BLACK, 2, 4)};
+				return new Command[] {new StrideCommand(0, Color.BLACK, 2, 4).dim()};
 			}
 
 			@Override
@@ -48,7 +48,7 @@ public class ClipTests {
 
 			@Override
 			public Command[] getNextFrame() {
-				return new Command[] {new StrideCommand(3, Color.BLACK, 2, 4)};
+				return new Command[] {new StrideCommand(3, Color.BLACK, 2, 4).dim()};
 			}
 
 			@Override
@@ -76,7 +76,7 @@ public class ClipTests {
 
 			@Override
 			public Command[] getNextFrame() {
-				return new Command[] {new StrideCommand(1, Color.BLACK, 2, 4)};
+				return new Command[] {new StrideCommand(1, Color.BLACK, 2, 4).dim()};
 			}
 
 			@Override

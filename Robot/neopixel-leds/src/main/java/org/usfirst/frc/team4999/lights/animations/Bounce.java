@@ -58,9 +58,9 @@ public class Bounce implements Animation {
 	@Override
 	public Command[] getNextFrame() {
 		Command[] out = new Command[1+pos.length];
-		out[0] = new StrideCommand(0, background, 1, 1);
+		out[0] = new StrideCommand(0, background, 1, 1).dim();
 		for(int i = 0; i < pos.length; i++) {
-			out[i+1] = new StrideCommand(pos[i], run[i], 1, area);
+			out[i+1] = new StrideCommand(pos[i], run[i], 1, area).dim();
 		}
 		for(int i = 0; i < v.length; i++) {
 			if(pos[i] >= area)

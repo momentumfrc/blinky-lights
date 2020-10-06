@@ -39,7 +39,7 @@ public class Blink implements Animation {
 
 	@Override
 	public Command[] getNextFrame() {
-		Command out[] =  {new StrideCommand(0, colors[idx], 1, 1)};
+		Command out[] =  {new StrideCommand(0, colors[idx], 1, 1).dim()};
 		idx = (idx + 1) % waittimes.length;
 		return out;
 	}

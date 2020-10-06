@@ -107,7 +107,7 @@ public class Fade implements Animation {
 			hold = true;
 			current.calculateDiffs(colors[idx], STEPS);
 		}
-		return new Command[] { new StrideCommand(0, current.toColor(), 1, 1) };
+		return new Command[] { new StrideCommand(0, current.toColor(), 1, 1).dim() };
 		
 	}
 

@@ -27,7 +27,7 @@ public class RandomColors implements Animation {
 		Command[] out = new Command[repeat];
 		for(int i = 0; i < out.length; i++) {
 			Color paint = new Color(randomRGB(), randomRGB(), randomRGB());
-			out[i] = new StrideCommand(i, paint, 1, repeat );
+			out[i] = new StrideCommand(i, paint, 1, repeat ).dim();
 		}
 		return out;
 	}

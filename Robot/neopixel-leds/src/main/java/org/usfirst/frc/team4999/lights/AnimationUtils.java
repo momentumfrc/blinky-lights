@@ -16,7 +16,7 @@ public class AnimationUtils {
 		int len = 1;
 		for(int i = 1; i < buffer.length; i++) {
 			if(!curr.equals(buffer[i])){
-				commandBuffer.add(new StrideCommand(addr, curr, len, buffer.length));
+				commandBuffer.add(new StrideCommand(addr, curr, len, buffer.length).dim());
 				curr = buffer[i];
 				addr = i;
 				len = 1;
@@ -24,7 +24,7 @@ public class AnimationUtils {
 				len++;
 			}
 		}
-		commandBuffer.add(new StrideCommand(addr, curr, len, buffer.length));
+		commandBuffer.add(new StrideCommand(addr, curr, len, buffer.length).dim());
 		
 		return commandBuffer.toArray(new Command[]{});
     }
