@@ -7,13 +7,12 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Vector;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 
-import org.usfirst.frc.team4999.lights.Display;
-import org.usfirst.frc.team4999.lights.Packet;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -22,13 +21,15 @@ import java.awt.Rectangle;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class UnitTestDisplay implements Display {
+import static org.junit.Assert.fail;
+
+public class PixelComparator implements BufferDisplay.BufferUpdateListener {
 
     private static class DifferenceShower {
 
         private static Object lock = new Object();
 
-        public static void showDifference(Color[] buff1, Color[] buff2) {
+        public static void showDifference(Color[] expected, Color[] actual) {
             final int pixel_size = 20;
             final int txt_offset = 4;
             JComponent component = new JComponent() {
@@ -37,25 +38,25 @@ public class UnitTestDisplay implements Display {
                 public void paintComponent(Graphics gd) {
                     Graphics2D g = (Graphics2D) gd;
                     g.setPaint(Color.BLACK);
-                    for(int i = 0; i < buff1.length; i++) {
+                    for(int i = 0; i < expected.length; i++) {
                         Rectangle rect = new Rectangle(i * pixel_size, 0, pixel_size, pixel_size);
                         String num = Integer.toString(i);
                         g.draw(rect);
                         g.drawString(num, i*pixel_size + txt_offset, pixel_size - txt_offset);
                     }
-                    for(int i = 0; i < buff1.length; i++) {
+                    for(int i = 0; i < expected.length; i++) {
                         Rectangle rect = new Rectangle(i * pixel_size, pixel_size, pixel_size, pixel_size);
-                        g.setPaint(buff1[i]);
+                        g.setPaint(expected[i]);
                         g.fill(rect);
                     }
-                    for(int i = 0; i < buff2.length; i++) {
+                    for(int i = 0; i < actual.length; i++) {
                         Rectangle rect = new Rectangle(i * pixel_size, pixel_size * 2, pixel_size, pixel_size);
-                        g.setPaint(buff2[i]);
+                        g.setPaint(actual[i]);
                         g.fill(rect);
                     }
                 }
             };
-            component.setPreferredSize(new Dimension(Math.max(buff1.length, buff2.length) * pixel_size, pixel_size * 3));
+            component.setPreferredSize(new Dimension(Math.max(expected.length, actual.length) * pixel_size, pixel_size * 3));
 
             JFrame frame = new JFrame();
             frame.add(component);
@@ -85,21 +86,18 @@ public class UnitTestDisplay implements Display {
         }
     }
 
-    public final SwingDisplay window;
     private Vector<Color[]> displayHistory;
 
     private static final String animationFileLocation = "animationFiles";
 
-    public UnitTestDisplay(int numPixels) {
-        window = new SwingDisplay(numPixels);
+    public PixelComparator() {
         displayHistory = new Vector<Color[]>();
     }
 
     @Override
-    public void show(Packet[] commands) {
-        window.show(commands);
-
-        displayHistory.add(window.getCurrentDisplayBuff());
+    public void onBufferUpdated(org.usfirst.frc.team4999.lights.Color[] buffer) {
+        Color[] awtBuffer = Arrays.stream(buffer).map(c -> new Color(c.getRed(), c.getGreen(), c.getBlue())).toArray(Color[]::new);
+        displayHistory.add(awtBuffer);
     }
 
     public void writeToFile(String filename) {
@@ -136,9 +134,12 @@ public class UnitTestDisplay implements Display {
             }
         }
     }
+    public void compareToFile(String filename) {
+        compareToFile(filename, true);
+    }
 
     @SuppressWarnings("unchecked")
-    public boolean compareToFile(String filename) {
+    public void compareToFile(String filename, boolean headless) {
         FileInputStream fileIn = null;
         ObjectInputStream objectIn = null;
         Vector<Color[]> readHistory = null;
@@ -173,12 +174,12 @@ public class UnitTestDisplay implements Display {
         }
 
         if(readHistory == null) {
-            System.out.println("The display history could not be read");
-            return false;
+            throw new RuntimeException("The display history could not be read");
         }
 
         if(displayHistory.size() != readHistory.size()) {
-            return false;
+            fail(String.format("Buffer history lengths differ: expected %d, actual %d\n", readHistory.size(), displayHistory.size()));
+            return;
         }
 
         for(int i = 0; i < displayHistory.size(); i++) {
@@ -186,20 +187,21 @@ public class UnitTestDisplay implements Display {
             Color[] currKey = readHistory.get(i);
 
             if(curr.length != currKey.length) {
-                DifferenceShower.showDifference(curr, currKey);
-                return false;
+                fail(String.format("Buffer sizes differ: expected %d, actual %d\n", currKey, curr));
+                if(!headless) DifferenceShower.showDifference(currKey, curr);
+                return;
             }
 
             for(int j = 0; j < curr.length; j++) {
                 if(!curr[j].equals(currKey[j])) {
-                    System.out.format("(frame:%d color:%d) %s != %s\n", i, j, curr[j], currKey[j]);
-                    DifferenceShower.showDifference(curr, currKey);
-                    return false;
+                    if(!headless) DifferenceShower.showDifference(currKey, curr);
+                    fail(String.format("Buffer pixels differ: (frame:%d color:%d) %s != %s\n", i, j, curr[j], currKey[j]));
+                    return;
                 }
             }
         }
 
-        return true;
+        return;
     }
 
 }

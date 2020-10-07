@@ -4,17 +4,17 @@ import org.junit.Test;
 import org.usfirst.frc.team4999.lights.Color;
 import org.usfirst.frc.team4999.lights.commands.*;
 import org.usfirst.frc.team4999.lights.commands.StrideCommand;
-import org.usfirst.frc.team4999.lights.animations.*;
-import org.usfirst.frc.team4999.tools.TestAnimator;
+import org.usfirst.frc.team4999.lights.animations.ClippedAnimation;
+import org.usfirst.frc.team4999.lights.animations.Overlay;
+import org.usfirst.frc.team4999.lights.animations.Solid;
+import org.usfirst.frc.team4999.lights.animations.Animation;
 
-import static org.junit.Assert.assertTrue;
+import static org.usfirst.frc.team4999.tools.CommonTests.headlessCompareToFile;
 
 public class ClipTests {
 
     @Test
     public void testStrideClip1() {
-        TestAnimator animator = new TestAnimator(80);
-        
         Animation background = new Solid(Color.WHITE);
         Animation strideAnimation = new Animation() {
 
@@ -30,19 +30,13 @@ public class ClipTests {
             
         };
         Animation clipAnimation = new ClippedAnimation(strideAnimation, 5, 4);
-        
-        animator.setAnimation(new Overlay(new Animation[]{background, clipAnimation}));
+        Animation overlay = new Overlay(new Animation[]{background, clipAnimation});
 
-        animator.displayFrames(10);
-
-        // animator.display.writeToFile("TestStrideClip1.bin");
-        assertTrue(animator.display.compareToFile("TestStrideClip1.bin"));
+        headlessCompareToFile(overlay, 10, "TestStrideClip1.bin");
     }
 
     @Test
     public void testStrideClip2() {
-        TestAnimator animator = new TestAnimator(80);
-        
         Animation background = new Solid(Color.WHITE);
         Animation strideAnimation = new Animation() {
 
@@ -58,19 +52,13 @@ public class ClipTests {
             
         };
         Animation clipAnimation = new ClippedAnimation(strideAnimation, 1, 5);
-        
-        animator.setAnimation(new Overlay(new Animation[]{background, clipAnimation}));
+        Animation overlay = new Overlay(new Animation[]{background, clipAnimation});
 
-        animator.displayFrames(10);
-
-        // animator.display.writeToFile("TestStrideClip2.bin");
-        assertTrue(animator.display.compareToFile("TestStrideClip2.bin"));
+        headlessCompareToFile(overlay, 10, "TestStrideClip2.bin");
     }
 
     @Test
     public void testStrideClip3() {
-        TestAnimator animator = new TestAnimator(80);
-        
         Animation background = new Solid(Color.WHITE);
         Animation strideAnimation = new Animation() {
 
@@ -86,12 +74,8 @@ public class ClipTests {
             
         };
         Animation clipAnimation = new ClippedAnimation(strideAnimation, 5, 16);
-        
-        animator.setAnimation(new Overlay(new Animation[]{background, clipAnimation}));
+        Animation overlay = new Overlay(new Animation[]{background, clipAnimation});
 
-        animator.displayFrames(10);
-
-        // animator.display.writeToFile("TestStrideClip3.bin");
-        assertTrue(animator.display.compareToFile("TestStrideClip3.bin"));
+        headlessCompareToFile(overlay, 10, "TestStrideClip3.bin");
     }
 }

@@ -3,16 +3,23 @@ package org.usfirst.frc.team4999.tests;
 import org.junit.Test;
 import org.usfirst.frc.team4999.tools.*;
 import org.usfirst.frc.team4999.lights.AnimationCoordinator;
+import org.usfirst.frc.team4999.lights.BrightnessFilter;
 import org.usfirst.frc.team4999.lights.Color;
 import org.usfirst.frc.team4999.lights.animations.*;
 
-import static org.junit.Assert.assertTrue;
 
 public class CoordinatorTest {
 
     @Test
     public void testCoordinator() {
-        TestAnimator an = new TestAnimator(80);
+        BrightnessFilter.setBrightness(1);
+        
+        BufferDisplay display = new BufferDisplay(80);
+        PixelComparator comparator = new PixelComparator();
+        display.addBufferListener(comparator);
+
+        TestAnimator an = new TestAnimator(display);
+        
         AnimationCoordinator coord = new AnimationCoordinator(an);
 
         Animation background = new BounceStack(new Color[] {Color.MOMENTUM_PURPLE, Color.MOMENTUM_PURPLE, Color.MOMENTUM_BLUE, Color.MOMENTUM_BLUE}, 8, 40);
@@ -48,16 +55,21 @@ public class CoordinatorTest {
         coord.popAnimation("Green Section");
         coord.popAnimation("RainbowSnake");
         an.displayFrames(10);
-
-        an.display.window.close();
         
         //an.display.writeToFile("Coordinator.bin");
-        assertTrue(an.display.compareToFile("Coordinator.bin"));
+        comparator.compareToFile("Coordinator.bin");
     }
 
     @Test
     public void testCoordinatorPriority() {
-        TestAnimator an = new TestAnimator(80);
+        BrightnessFilter.setBrightness(1);
+
+        BufferDisplay display = new BufferDisplay(80);
+        PixelComparator comparator = new PixelComparator();
+        display.addBufferListener(comparator);
+
+        TestAnimator an = new TestAnimator(display);
+        
         AnimationCoordinator coord = new AnimationCoordinator(an);
         an.displayFrames(6);
 
@@ -85,17 +97,21 @@ public class CoordinatorTest {
 
         coord.popAnimation("Stack");
         an.displayFrames(25);
-
-
-        an.display.window.close();
         
         //an.display.writeToFile("CoordinatorPriorities.bin");
-        assertTrue(an.display.compareToFile("CoordinatorPriorities.bin"));
+        comparator.compareToFile("CoordinatorPriorities.bin");
     }
 
     @Test
     public void testCoordinatorFalseTransparency() {
-        TestAnimator an = new TestAnimator(80);
+        BrightnessFilter.setBrightness(1);
+
+        BufferDisplay display = new BufferDisplay(80);
+        PixelComparator comparator = new PixelComparator();
+        display.addBufferListener(comparator);
+
+        TestAnimator an = new TestAnimator(display);
+        
         AnimationCoordinator coord = new AnimationCoordinator(an);
         an.displayFrames(6);
 
@@ -106,16 +122,21 @@ public class CoordinatorTest {
         Animation rainbow_overlay = new ClippedAnimation(Snake.rainbowSnake(200), 10, 40);
         coord.pushAnimation("Rainbow Overlay", rainbow_overlay, 10, false);
         an.displayFrames(25);
-
-        an.display.window.close();
         
         //an.display.writeToFile("CoordinatorFalseTransparency.bin");
-        assertTrue(an.display.compareToFile("CoordinatorFalseTransparency.bin"));
+        comparator.compareToFile("CoordinatorFalseTransparency.bin");
     }
 
     @Test
     public void testHasAnimation() {
-        TestAnimator an = new TestAnimator(80);
+        BrightnessFilter.setBrightness(1);
+
+        BufferDisplay display = new BufferDisplay(80);
+        PixelComparator comparator = new PixelComparator();
+        display.addBufferListener(comparator);
+
+        TestAnimator an = new TestAnimator(display);
+        
         AnimationCoordinator coord = new AnimationCoordinator(an);
 
         Animation hatch_preset_mode_overlay = new Overlay(new Animation[] {
@@ -164,6 +185,6 @@ public class CoordinatorTest {
         }
 
         //an.display.writeToFile("CoordinatorHasAnimation.bin");
-        assertTrue(an.display.compareToFile("CoordinatorHasAnimation.bin"));
+        comparator.compareToFile("CoordinatorHasAnimation.bin");
     }
 }

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4999.tools;
 
 import java.util.Arrays;
+import java.util.function.BooleanSupplier;
 
 import org.usfirst.frc.team4999.lights.*;
 import org.usfirst.frc.team4999.lights.animations.Animation;
@@ -10,15 +11,15 @@ import org.usfirst.frc.team4999.lights.commands.Command;
 public class TestAnimator extends Animator {
 	
     private Animation current;
-    public final UnitTestDisplay display;
+    private final Display display;
 	
 	/**
 	 * Creates an animator using the specified {@link Display} 
 	 * @param pixels Display to output to
 	 */
-	public TestAnimator(int numPixels) {
+	public TestAnimator(Display display) {
         super(null);
-        display = new UnitTestDisplay(numPixels);
+        this.display = display;
         setAnimation(new Solid(Color.BLACK));
 	}
 	
@@ -37,6 +38,10 @@ public class TestAnimator extends Animator {
     }
     
     public void displayFrames(int numFrames) {
+        displayFrames(numFrames, () -> false);
+    }
+
+    public void displayFrames(int numFrames, BooleanSupplier shouldSleep) {
         for(int i = 0; i < numFrames; i++) {
             Command[] commands = current.getNextFrame();
 			Packet[] builtCommands = Arrays.stream(commands).map(Command::build).toArray(Packet[]::new);
@@ -44,36 +49,27 @@ public class TestAnimator extends Animator {
 			int delay = current.getFrameDelayMilliseconds();
 			
 			if(delay < 0 ) System.out.println("Animation returned a delay less than 0... interpreting as no delay");
-			if(display.window.isVisible()) {
-                if (delay > 0) {
-                    try {
-                        Thread.sleep(delay);
-                    } catch (InterruptedException e) {
-                        break;
-                    }
+			if(shouldSleep.getAsBoolean() && delay > 0) {
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    break;
                 }
             }
         }
     }
 
-    public void stepFrames(int numFrames) {
+    public void stepFrames(int numFrames, Object stepLock) {
         for(int i = 0; i < numFrames; i++) {
 			Command[] commands = current.getNextFrame();
 			Packet[] builtCommands = Arrays.stream(commands).map(Command::build).toArray(Packet[]::new);
-			display.show(builtCommands);
-			int delay = current.getFrameDelayMilliseconds();
-			
-			if(delay < 0 ) System.out.println("Animation returned a delay less than 0... interpreting as no delay");
-			if(display.window.isVisible()) {
-                if (delay > 0) {
-                    try {
-                        Thread.sleep(delay);
-                    } catch (InterruptedException e) {
-                        break;
-                    }
-                }
-                display.window.waitForKeypress();
+            display.show(builtCommands);
+            
+            try {
+                stepLock.wait();
+            } catch (InterruptedException e) {
+                break;
             }
-        }
+    }
     }
 }

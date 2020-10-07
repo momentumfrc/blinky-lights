@@ -5,14 +5,17 @@ import org.usfirst.frc.team4999.lights.BrightnessFilter;
 import org.usfirst.frc.team4999.lights.Color;
 import org.usfirst.frc.team4999.lights.animations.Animation;
 import org.usfirst.frc.team4999.lights.animations.Solid;
-import org.usfirst.frc.team4999.tools.TestAnimator;
+import org.usfirst.frc.team4999.tools.*;
 
-import static org.junit.Assert.assertTrue;
 
 public class BrightnessTest {
     @Test
     public void testBrightness() {
-        TestAnimator animator = new TestAnimator(80);
+        BufferDisplay display = new BufferDisplay(80);
+        PixelComparator comparator = new PixelComparator();
+        display.addBufferListener(comparator);
+
+        TestAnimator animator = new TestAnimator(display);
 
         Animation white = new Solid(Color.WHITE);
         Animation red = new Solid(Color.RED);
@@ -53,6 +56,6 @@ public class BrightnessTest {
         animator.displayFrames(2);
         
         // animator.display.writeToFile("TestBrightness.bin");
-        assertTrue(animator.display.compareToFile("TestBrightness.bin"));
+        comparator.compareToFile("TestBrightness.bin");
     }
 }
