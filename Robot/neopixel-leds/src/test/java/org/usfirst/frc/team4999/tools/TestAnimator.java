@@ -11,7 +11,7 @@ import org.usfirst.frc.team4999.lights.commands.Command;
 public class TestAnimator extends Animator {
 	
     private Animation current;
-    private final Display display;
+    public final Display display;
 	
 	/**
 	 * Creates an animator using the specified {@link Display} 
@@ -39,6 +39,10 @@ public class TestAnimator extends Animator {
     
     public void displayFrames(int numFrames) {
         displayFrames(numFrames, () -> false);
+    }
+
+    public void displayFrames(int numFrames, boolean shouldSleep) {
+        displayFrames(numFrames, () -> shouldSleep);
     }
 
     public void displayFrames(int numFrames, BooleanSupplier shouldSleep) {
