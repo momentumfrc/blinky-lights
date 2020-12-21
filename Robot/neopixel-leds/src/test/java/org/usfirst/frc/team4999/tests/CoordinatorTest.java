@@ -56,8 +56,8 @@ public class CoordinatorTest {
         coord.popAnimation("RainbowSnake");
         an.displayFrames(10);
         
-        //an.display.writeToFile("Coordinator.bin");
-        comparator.compareToFile("Coordinator.bin");
+        //an.display.writeToFile("Coordinator");
+        comparator.compareToFile("Coordinator");
     }
 
     @Test
@@ -98,8 +98,8 @@ public class CoordinatorTest {
         coord.popAnimation("Stack");
         an.displayFrames(25);
         
-        //an.display.writeToFile("CoordinatorPriorities.bin");
-        comparator.compareToFile("CoordinatorPriorities.bin");
+        //an.display.writeToFile("CoordinatorPriorities");
+        comparator.compareToFile("CoordinatorPriorities");
     }
 
     @Test
@@ -123,8 +123,8 @@ public class CoordinatorTest {
         coord.pushAnimation("Rainbow Overlay", rainbow_overlay, 10, false);
         an.displayFrames(25);
         
-        //an.display.writeToFile("CoordinatorFalseTransparency.bin");
-        comparator.compareToFile("CoordinatorFalseTransparency.bin");
+        //an.display.writeToFile("CoordinatorFalseTransparency");
+        comparator.compareToFile("CoordinatorFalseTransparency");
     }
 
     @Test
@@ -184,7 +184,7 @@ public class CoordinatorTest {
             an.displayFrames(2);
         }
 
-        //an.display.writeToFile("CoordinatorHasAnimation.bin");
-        comparator.compareToFile("CoordinatorHasAnimation.bin");
+        //an.display.writeToFile("CoordinatorHasAnimation");
+        comparator.compareToFile("CoordinatorHasAnimation");
     }
 }

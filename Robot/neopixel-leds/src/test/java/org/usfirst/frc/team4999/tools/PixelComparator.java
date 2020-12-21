@@ -1,13 +1,8 @@
 package org.usfirst.frc.team4999.tools;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 
 import org.usfirst.frc.team4999.tools.gui.DiffShower;
@@ -20,8 +15,6 @@ public class PixelComparator implements BufferDisplay.BufferUpdateListener {
 
     private Vector<Color[]> displayHistory;
 
-    private static final String animationFileLocation = "animationFiles";
-
     public PixelComparator() {
         displayHistory = new Vector<Color[]>();
     }
@@ -32,81 +25,25 @@ public class PixelComparator implements BufferDisplay.BufferUpdateListener {
         displayHistory.add(awtBuffer);
     }
 
-    public void writeToFile(String filename) {
-        FileOutputStream fileOut = null;
-        ObjectOutputStream objectOut = null;
+    public void writeToFile(String name) {
         try {
-            fileOut = new FileOutputStream(Path.of(animationFileLocation,filename).toString());
-            objectOut = new ObjectOutputStream(fileOut);
-            objectOut.writeObject(displayHistory);
-            objectOut.close();
-            fileOut.close();
-            System.out.println("The display history was succesfully saved");
-        } catch (Exception e) {
+            AnimationFileManager.saveFile(displayHistory, name);
+        } catch (IOException e) {
             e.printStackTrace();
-            if(e instanceof FileNotFoundException) {
-                throw new RuntimeException(String.format("File Not Found: %s", Path.of(animationFileLocation,filename).toString()));
-            }
-        } finally {
-            if(objectOut != null) {
-                try {
-                    objectOut.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                
-            }
-            if(fileOut != null) {
-                try {
-                    fileOut.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                
-            }
+            throw new RuntimeException(String.format("Failed to save %s", name));
         }
     }
     public void compareToFile(String filename) {
         compareToFile(filename, true);
     }
 
-    @SuppressWarnings("unchecked")
-    public void compareToFile(String filename, boolean headless) {
-        FileInputStream fileIn = null;
-        ObjectInputStream objectIn = null;
-        Vector<Color[]> readHistory = null;
+    public void compareToFile(String name, boolean headless) {
+        List<Color[]> readHistory;
         try {
-            fileIn = new FileInputStream(Path.of(animationFileLocation,filename).toString());
-            objectIn = new ObjectInputStream(fileIn);
-            
-            Object obj = objectIn.readObject();
-            readHistory = (Vector<Color[]>) obj;        
-        } catch (Exception e) {
-            if(e instanceof FileNotFoundException) {
-                throw new RuntimeException(String.format("File Not Found: %s", Path.of(animationFileLocation,filename).toString()));
-            }
+            readHistory = AnimationFileManager.loadFile(name);
+        } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if(objectIn != null) {
-                try {
-                    objectIn.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                
-            }
-            if(fileIn != null) {
-                try {
-                    fileIn.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                
-            }
-        }
-
-        if(readHistory == null) {
-            throw new RuntimeException("The display history could not be read");
+            throw new RuntimeException(String.format("Failed to load %s", name));
         }
 
         if(displayHistory.size() != readHistory.size()) {

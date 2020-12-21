@@ -22,43 +22,43 @@ public class AnimationTest {
     @Test
     public void testBlinkAnimation() {
         Animation blink = new Blink(rainbowcolors, 500);
-        headlessCompareToFile(blink, 10, "BlinkAnimation.bin");
+        headlessCompareToFile(blink, 10, "BlinkAnimation");
     }
 
     @Test
     public void testBounceAnimation() {
         Animation bounce = new Bounce(Color.WHITE, rainbowcolors, 45, 20);
-        headlessCompareToFile(bounce, 250, "BounceAnimation.bin");
+        headlessCompareToFile(bounce, 250, "BounceAnimation");
     }
 
     @Test
     public void testBounceStackAnimation()  {
         Animation bounceStack = new BounceStack(rainbowcolors, 14, 20);
-        headlessCompareToFile(bounceStack, 250, "BounceStackAnimation.bin");
+        headlessCompareToFile(bounceStack, 250, "BounceStackAnimation");
     }
 
     @Test
     public void testFadeAnimation() {
         Animation fade = new Fade(rainbowcolors, 300, 300);
-        headlessCompareToFile(fade, 600, "FadeAnimation.bin");
+        headlessCompareToFile(fade, 600, "FadeAnimation");
     }
 
     @Test
     public void testSnakeAnimation() {
         Animation snake = Snake.twoColorSnake(Color.BLUE, Color.WHITE, 1, 5, 10, 20);
-        headlessCompareToFile(snake, 150, "TwoColorSnakeAnimation.bin");
+        headlessCompareToFile(snake, 150, "TwoColorSnakeAnimation");
     }
 
     @Test
     public void testSolidAnimation() {
         Animation solid = new Solid(rainbowcolors);
-        headlessCompareToFile(solid, 4, "SolidAnimation.bin");
+        headlessCompareToFile(solid, 4, "SolidAnimation");
     }
 
     @Test
     public void testStackAnimation() {
         Animation stack = new Stack(rainbowcolors, 25, 40);
-        headlessCompareToFile(stack, 625, "StackAnimation.bin");
+        headlessCompareToFile(stack, 625, "StackAnimation");
     }
 
     @Test
@@ -68,7 +68,7 @@ public class AnimationTest {
 
         Animation overlayed = new Overlay(new Animation[] {background, bouncer});
 
-        headlessCompareToFile(overlayed, 250, "OverlayAnimation.bin");
+        headlessCompareToFile(overlayed, 250, "OverlayAnimation");
     }
 
     @Test
@@ -80,6 +80,6 @@ public class AnimationTest {
         Animation clippedSolid = new ClippedAnimation(solid, 50, 20);
 
         Animation overlay = new Overlay(new Animation[] {base, clippedFade, clippedSolid});
-        headlessCompareToFile(overlay, 300, "ClippedAnimation.bin");
+        headlessCompareToFile(overlay, 300, "ClippedAnimation");
     }
 }

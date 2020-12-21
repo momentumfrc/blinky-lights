@@ -32,7 +32,7 @@ public class ClipTests {
         Animation clipAnimation = new ClippedAnimation(strideAnimation, 5, 4);
         Animation overlay = new Overlay(new Animation[]{background, clipAnimation});
 
-        headlessCompareToFile(overlay, 10, "TestStrideClip1.bin");
+        headlessCompareToFile(overlay, 10, "TestStrideClip1");
     }
 
     @Test
@@ -54,7 +54,7 @@ public class ClipTests {
         Animation clipAnimation = new ClippedAnimation(strideAnimation, 1, 5);
         Animation overlay = new Overlay(new Animation[]{background, clipAnimation});
 
-        headlessCompareToFile(overlay, 10, "TestStrideClip2.bin");
+        headlessCompareToFile(overlay, 10, "TestStrideClip2");
     }
 
     @Test
@@ -76,6 +76,6 @@ public class ClipTests {
         Animation clipAnimation = new ClippedAnimation(strideAnimation, 5, 16);
         Animation overlay = new Overlay(new Animation[]{background, clipAnimation});
 
-        headlessCompareToFile(overlay, 10, "TestStrideClip3.bin");
+        headlessCompareToFile(overlay, 10, "TestStrideClip3");
     }
 }

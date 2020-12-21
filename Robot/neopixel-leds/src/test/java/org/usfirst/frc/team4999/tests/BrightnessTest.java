@@ -55,7 +55,7 @@ public class BrightnessTest {
         animator.setAnimation(blue);
         animator.displayFrames(2);
         
-        // animator.display.writeToFile("TestBrightness.bin");
-        comparator.compareToFile("TestBrightness.bin");
+        // animator.display.writeToFile("TestBrightness");
+        comparator.compareToFile("TestBrightness");
     }
 }
