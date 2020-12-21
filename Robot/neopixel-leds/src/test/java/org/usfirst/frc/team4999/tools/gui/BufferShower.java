@@ -103,6 +103,9 @@ public class BufferShower implements BufferDisplay.BufferUpdateListener {
             @Override
             public void windowClosing(WindowEvent arg) {
                 windowIsClosed = true;
+                synchronized(framesLock) {
+                    framesLock.notifyAll();
+                }
             }
         });
 
@@ -117,10 +120,9 @@ public class BufferShower implements BufferDisplay.BufferUpdateListener {
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_SPACE) {
                     shouldStepFrames = !shouldStepFrames;
-                } else {
-                    synchronized(framesLock) {
-                        framesLock.notifyAll();
-                    }
+                }
+                synchronized(framesLock) {
+                    framesLock.notifyAll();
                 }
             }
         });
