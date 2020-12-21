@@ -10,12 +10,19 @@ import java.awt.Rectangle;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Arrays;
 
 public class DiffShower {
     
     private static Object waitForButtonPressLock = new Object();
 
-    public static void showDifference(Color[] expected, Color[] actual) {
+    private static Color[] convertMomentumColorToAwt(org.usfirst.frc.team4999.lights.Color[] in) {
+        return Arrays.stream(in).map(color -> new Color(color.getRed(), color.getGreen(), color.getBlue())).toArray(Color[]::new);
+    }
+
+    public static void showDifference(org.usfirst.frc.team4999.lights.Color[] momentumExpected, org.usfirst.frc.team4999.lights.Color[] momentumActual) {
+        Color[] expected = convertMomentumColorToAwt(momentumExpected);
+        Color[] actual = convertMomentumColorToAwt(momentumActual);
         final int pixel_size = 20;
         final int txt_offset = 4;
         final int length = Math.max(expected.length, actual.length);

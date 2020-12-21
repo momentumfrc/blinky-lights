@@ -12,7 +12,8 @@ import java.util.Vector;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.awt.Color;
+import org.usfirst.frc.team4999.lights.Color;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -75,13 +76,13 @@ public class AnimationFileManager {
 
             FileInputStream fileIn = null;
             ObjectInputStream objectIn = null;
-            Vector<Color[]> readHistory = null;
+            Vector<java.awt.Color[]> readHistory = null;
             try {
                 fileIn = new FileInputStream(file);
                 objectIn = new ObjectInputStream(fileIn);
                 
                 Object obj = objectIn.readObject();
-                readHistory = (Vector<Color[]>) obj;        
+                readHistory = (Vector<java.awt.Color[]>) obj;        
             } catch (Exception e) {
                 return;
             } finally {
@@ -101,7 +102,12 @@ public class AnimationFileManager {
                 return;
             }
             try {
-                saveFile(readHistory, name);
+                List<Color[]> convertedHistory = readHistory.stream().map(
+                    buff -> Arrays.stream(buff).map(
+                        color -> new Color(color.getRed(), color.getGreen(), color.getBlue())
+                    ).toArray(Color[]::new)
+                ).collect(Collectors.toList());
+                saveFile(convertedHistory, name);
             } catch(IOException e) {
                 return;
             }

@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Vector;
 
 import org.usfirst.frc.team4999.tools.gui.DiffShower;
-
-import java.awt.Color;
+import org.usfirst.frc.team4999.lights.Color;
 
 import static org.junit.Assert.fail;
 
@@ -20,9 +19,9 @@ public class PixelComparator implements BufferDisplay.BufferUpdateListener {
     }
 
     @Override
-    public void onBufferUpdated(org.usfirst.frc.team4999.lights.Color[] buffer) {
-        Color[] awtBuffer = Arrays.stream(buffer).map(c -> new Color(c.getRed(), c.getGreen(), c.getBlue())).toArray(Color[]::new);
-        displayHistory.add(awtBuffer);
+    public void onBufferUpdated(Color[] buffer) {
+        
+        displayHistory.add(buffer);
     }
 
     public void writeToFile(String name) {
