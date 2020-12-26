@@ -52,6 +52,23 @@ public class BufferDisplay implements Display {
         return ((int) b) & 0xff;
     }
 
+    /**
+     * Checks if a byte[] packet is a  valid resync packet
+     * 
+     * Resync packets are defined as a packet of length >= 16 full of the value 0xff.
+     * @param rawPacketBytes - the packet
+     * @return Whether or not the packet is a resync packet
+     */
+    private boolean isValidResyncPacket(byte[] rawPacketBytes) {
+        if(rawPacketBytes.length < 16)
+            return false;
+        for(int i = 0; i < rawPacketBytes.length; ++i) {
+            if(rawPacketBytes[i] != 0xff)
+                return false;
+        }
+        return true;
+    }
+
     private void interpretPacket(Packet packet) {
         /*
         This interpretation code should be identical to that of the arduino
@@ -82,6 +99,10 @@ public class BufferDisplay implements Display {
         */
         byte[] rawPacketBytes = packet.getData();
         int payloadLen = unsignedByteValue(rawPacketBytes[0]);
+        if(isValidResyncPacket(rawPacketBytes)) {
+            // This buffer display should never get out of sync, so resync packets can be ignored
+            return;
+        }
         if(rawPacketBytes.length - 1 != payloadLen) {
             System.err.format("Invalid packet: stated length %d does not match actual length %d\n", payloadLen, rawPacketBytes.length - 1);
             return;
