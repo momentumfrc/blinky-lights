@@ -1,15 +1,20 @@
 package org.usfirst.frc.team4999.tools;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
+
 import org.usfirst.frc.team4999.lights.*;
 import org.usfirst.frc.team4999.lights.animations.Animation;
 import org.usfirst.frc.team4999.lights.animations.Solid;
 import org.usfirst.frc.team4999.lights.commands.Command;
+import org.usfirst.frc.team4999.lights.commands.ShowCommand;
 
 public class TestAnimator extends Animator {
 	
     private Animation current;
     public final Display display;
+
+    private ShowCommand showCommand = new ShowCommand();
 	
 	/**
 	 * Creates an animator using the specified {@link Display} 
@@ -43,7 +48,7 @@ public class TestAnimator extends Animator {
     public void displayFrames(int numFrames, boolean shouldSleep) {
         for(int i = 0; i < numFrames; i++) {
             Command[] commands = current.getNextFrame();
-			Packet[] builtCommands = Arrays.stream(commands).map(Command::build).toArray(Packet[]::new);
+			Packet[] builtCommands = Stream.concat(Arrays.stream(commands), Stream.of(showCommand)).map(Command::build).toArray(Packet[]::new);
 			display.show(builtCommands);
 			int delay = current.getFrameDelayMilliseconds();
 			

@@ -1,10 +1,12 @@
 package org.usfirst.frc.team4999.lights;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 import org.usfirst.frc.team4999.lights.animations.Animation;
 import org.usfirst.frc.team4999.lights.animations.Solid;
 import org.usfirst.frc.team4999.lights.commands.Command;
+import org.usfirst.frc.team4999.lights.commands.ShowCommand;
 
 /**
  * Runs in an infinite loop. Displays a frame of {@link Animation}, then waits the duration specified by the animation
@@ -14,6 +16,8 @@ import org.usfirst.frc.team4999.lights.commands.Command;
 class AnimatorThread extends Thread {
 	private Display out;
 	private Animation current;
+
+	private ShowCommand showCommand = new ShowCommand();
 	
 	public AnimatorThread(Display out, Animation current) {
 		super("Animator Thread");
@@ -34,7 +38,7 @@ class AnimatorThread extends Thread {
 			Animation animation = current;
 			// show current frame
 			Command[] commands = animation.getNextFrame();
-			Packet[] builtCommands = Arrays.stream(commands).map(Command::build).toArray(Packet[]::new);
+			Packet[] builtCommands = Stream.concat(Arrays.stream(commands), Stream.of(showCommand)).map(Command::build).toArray(Packet[]::new);
 			out.show(builtCommands);
 			// get how long to delay for
 			int delay = animation.getFrameDelayMilliseconds();
