@@ -114,16 +114,17 @@ public class BufferDisplay implements Display {
         
         int len = payload.length;
         int command = payload[0];
+        if(len == 1 && command == 1) {
+            // Show packets need a special condition here because they do not
+            // contain an address or color, causing an array overrun
+            notifyBufferListeners();
+            return;
+        }
         int address = payload[1];
         Color rgb = new Color(payload[2], payload[3], payload[4]);
         switch(command) {
             case 1:
-                if(len == 1) {
-                    notifyBufferListeners();
-                } else {
-                    System.err.format("Invalid display packet: expected length 1, actual length %d\n", len);
-                }
-                break;
+                throw new RuntimeException("Reached unreachable code");
             case 2:
                 if(len == 5) {
                     paintPattern(address, rgb, 1, 0, 0);
@@ -183,14 +184,5 @@ public class BufferDisplay implements Display {
         for(Packet packet : commands) {
             interpretPacket(packet);
         }
-        // FIXME: Should the show command be sent by the Animator or by the Display?
-        // It feels wrong to call notifyBufferListeners() without receiving a show packet.
-        // To emulate how the NeoPixels display works, I'd do something like:
-        //     interpretPacket(new ShowCommand().build())
-        // However, that would just end up calling notifyBufferListeners(), so why bother
-        // with the overhead of creating a ShowCommand and calling the interpretPacket function?
-        // A cleaner way to do this would be to make the animator responsible for sending ShowCommands.
-        // Then, the sole function of the display is to handle forwarding commands to the hardware.
-        notifyBufferListeners();
     }
 }
