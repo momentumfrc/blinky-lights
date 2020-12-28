@@ -44,7 +44,7 @@ public class NeoPixels implements Display {
 	private final int SYNC_FREQ = 1000;
 	private int syncidx = 0;
 	
-	Packet syncPacket, showPacket;
+	Packet syncPacket;
 	
 	/**
 	 * Gets an instance of NeoPixels
@@ -61,7 +61,6 @@ public class NeoPixels implements Display {
 		strip = new NeoPixelsIO(I2C.Port.kOnboard, I2C_ADDRESS);
 		
 		syncPacket = new SyncCommand().build();
-		showPacket = new ShowCommand().build();
 	}
 	
 	synchronized public void show(Packet[] commands) {
@@ -76,8 +75,6 @@ public class NeoPixels implements Display {
 			for(Packet packet : commands) {
 				strip.writePacket(packet);
 			}
-			// Show the sent packets
-			strip.writePacket(showPacket);
 			
 		} catch (Exception e) {
 			// The generic try-catch prevents an error in the purely cosmetic neopixels from killing the whole robot

@@ -4,13 +4,13 @@
   <groupId>org.usfirst.frc.team4999</groupId>
   <artifactId>neopixel-leds</artifactId>
   <packaging>jar</packaging>
-  <version>1.4</version>
+  <version>1.5</version>
   <name>neopixel-leds</name>
   <url>http://maven.apache.org</url>
   
   <properties>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
   </properties>
   
   <repositories>
@@ -26,6 +26,12 @@
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>[4.13.1,5.0.0)</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.12.0</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -49,6 +55,25 @@
         <configuration>
           <workingDirectory>${project.basedir}</workingDirectory>
         </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.6</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>prepare-package</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
