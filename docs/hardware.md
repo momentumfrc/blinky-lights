@@ -23,7 +23,7 @@ effects of ESD. Failing that, it is sometimes possible to fix a dead LED strip.
 
 ### ESD Mitigation
 1. Keep the leads as short as possible between the LED strip, power supply, and microcontroller/RoboRIO
-2. Attach a 1000uF capacitor accross the power leads of the LED strip
+2. Attach a 1000uF capacitor across the power leads of the LED strip
 3. Add a 300 - 500 ohm resistor between the microcontroller/RoboRIO and the LED strip's
 data line
 
@@ -54,7 +54,7 @@ approach Momentum has used in previous years.
 
 In this approach, the LEDs are wired to an Arduino, which functions to "translate" the
 I2C communication from the RoboRIO into the PWM communication understood by the LEDs.
-The ardunio is more resistant to ESD, and also can use error detection to improve
+The arduino is more resistant to ESD, and also can use error detection to improve
 the reliability of the I2C signal.
 
 We recommend the [Arduino Pro Mini](https://store.arduino.cc/usa/arduino-pro-mini), as

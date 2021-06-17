@@ -3,7 +3,7 @@ An animation framework for using Addressable LEDs on an FRC robot.
 
 
 ## Overview
-Fancy-looking LEDs add that extra level of percieved expertise to any FRC robot.
+Fancy-looking LEDs add that extra level of perceived expertise to any FRC robot.
 It doesn't matter if you have no autonomous, if you can't score any points, if
 there are more components on the floor than left attached to the robot, so long
 as you have blinking LEDS you are considered a "professional" team. This library
