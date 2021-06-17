@@ -1,4 +1,4 @@
-name: neopixel-leds Java CI with Maven
+name: neopixel-leds Java CI with Gradle
 
 on: [push]
 
@@ -15,6 +15,6 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 11
-    - name: Build with Maven
-      run: mvn -B test --file pom.xml
+    - name: Build with Gradle
+      run: ./gradlew test
       working-directory: ./Robot/neopixel-leds

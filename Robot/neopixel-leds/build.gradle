@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id 'jacoco'
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://frcmaven.wpi.edu/artifactory/release/')
+    }
+
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+dependencies {
+    implementation 'edu.wpi.first.ntcore:ntcore-java:2020.3.2'
+    implementation 'edu.wpi.first.wpilibj:wpilibj-java:2020.3.2'
+    testImplementation 'junit:junit:[4.13.1,5.0.0)'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.12.0'
+}
+
+group = 'org.usfirst.frc.team4999'
+version = '1.5.1'
+description = 'neopixel-leds'
+java.sourceCompatibility = JavaVersion.VERSION_11
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from(components.java)
+        }
+    }
+    repositories {
+        maven {
+            url = layout.projectDirectory.dir("../Momentum-Tools/mvn-repo")
+        }
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+}
