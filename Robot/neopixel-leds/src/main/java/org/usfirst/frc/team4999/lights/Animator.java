@@ -8,11 +8,6 @@ import org.usfirst.frc.team4999.lights.animations.Solid;
 import org.usfirst.frc.team4999.lights.commands.Command;
 import org.usfirst.frc.team4999.lights.commands.ShowCommand;
 
-/**
- * Runs in an infinite loop. Displays a frame of {@link Animation}, then waits the duration specified by the animation
- * @author jordan
- *
- */
 class AnimatorThread extends Thread {
 	private Display out;
 	private Animation current;
@@ -59,7 +54,8 @@ class AnimatorThread extends Thread {
 }
 	
 /**
- * Holds a runnable {@link AnimationThread}
+ * Shows the frames of an {@link org.usfirst.frc.team4999.lights.animations.Animation} on a
+ * {@link Display}.
  * @author jordan
  *
  */
@@ -76,7 +72,7 @@ public class Animator {
 	
 	/**
 	 * Creates an animator using the specified {@link Display} 
-	 * @param pixels Display to output to
+	 * @param pixels The output display
 	 */
 	public Animator(Display pixels) {
 		if(pixels == null)
@@ -86,8 +82,8 @@ public class Animator {
 	}
 	
 	/**
-	 * Set the animation run on the AnimationThread
-	 * @param newAnimation
+	 * Set the animation to show
+	 * @param newAnimation The animation to show
 	 */
 	public void setAnimation(Animation newAnimation) {
 		if(newAnimation == null) {
@@ -98,6 +94,12 @@ public class Animator {
 		animate.setAnimation(newAnimation);
 	}
 	
+	/**
+	 * Stops the current animation and kills the animator thread.
+	 * <p>
+	 * Note: <b>Once this method is invoked, the only way to re-start the animation is to create
+	 * a new Animator</b>
+	 */
 	public void stopAnimation() {
 		animate.interrupt();
 	}

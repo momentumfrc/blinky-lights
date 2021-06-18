@@ -10,7 +10,9 @@ public class Color {
 	private final int r,g,b;
 	
 	/**
-	 * Makes a new color with the specified values between 0-255
+	 * Makes a new color with the specified RGB values.
+	 * <p>
+	 * Input values are expected to be in the range [0,255]
 	 * @param r Red channel
 	 * @param g Green channel
 	 * @param b Blue channel
@@ -79,6 +81,4 @@ public class Color {
 	public static final Color WHITE = new Color(255,255,255);
 	public static final Color MOMENTUM_BLUE = new Color(6,206,255);
 	public static final Color MOMENTUM_PURPLE = new Color(159,1,255);
-	
-	
 }

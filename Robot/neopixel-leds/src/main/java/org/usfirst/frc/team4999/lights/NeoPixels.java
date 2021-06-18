@@ -30,7 +30,7 @@ class NeoPixelsIO extends I2C {
 
 /**
  * Class to communicate with an arduino driving a strip of NeoPixel LEDs over I2C
- * @author jordan
+ * @author Jordan
  *
  */
 public class NeoPixels implements Display {

@@ -1,16 +1,13 @@
 package org.usfirst.frc.team4999.lights;
 
 /**
- * Output to display animation data
- * <p>
- * Display receives an array of Packets which match <a href="https://github.com/momentumfrc/2017Steamworks/wiki/Light-strings-on-the-Robot">this</a> structure 
+ * A generic interface for any component that can render and show the LED output.
  * @author jordan
- *
  */
 public interface Display {
 	/**
 	 * Display the packets
-	 * @param pixels
+	 * @param commands The packets to show
 	 */
 	void show(Packet[] commands);
 }

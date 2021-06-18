@@ -1,5 +1,12 @@
 package org.usfirst.frc.team4999.lights;
 
+/**
+ * A binary representation of a {@link org.usfirst.frc.team4999.lights.commands.Command}
+ * <p>
+ * Commands are represented according to the protocol specified
+ * <a href="https://github.com/momentumfrc/2017Steamworks/wiki/Light-strings-on-the-Robot">here</a>
+ * @author Jordan
+ */
 public class Packet {
 	
 	private static final int MAX_PACKET_SIZE = 16;
