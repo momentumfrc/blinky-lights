@@ -25,7 +25,12 @@ dependencies {
 group = 'org.usfirst.frc.team4999'
 version = '1.5.1'
 description = 'neopixel-leds'
-java.sourceCompatibility = JavaVersion.VERSION_11
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    withJavadocJar()
+    withSourcesJar()
+}
 
 publishing {
     publications {
@@ -38,6 +43,15 @@ publishing {
             url = layout.projectDirectory.dir("../Momentum-Tools/mvn-repo")
         }
     }
+}
+
+javadoc {
+    source = sourceSets.main.allJava
+    destinationDir = layout.projectDirectory.dir("docs").asFile
+}
+
+publish {
+    dependsOn javadoc
 }
 
 test {
