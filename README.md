@@ -19,3 +19,7 @@ not fit into either of those two categories, it is still possible to take
 advantage of the animation library by writing a custom adapter.
 
 For more details, see [hardware.md](docs/hardware.md)
+
+## API
+
+The javadocs can be accessed [here](https://raw.githubusercontent.com/momentumfrc/blinky-lights/docs/Robot/neopixel-leds/docs/index.html).
