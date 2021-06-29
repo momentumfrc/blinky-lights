@@ -2,13 +2,13 @@ package org.usfirst.frc.team4999.tests;
 
 import org.junit.Test;
 import org.usfirst.frc.team4999.tools.*;
-import org.usfirst.frc.team4999.lights.AnimationCoordinator;
+import org.usfirst.frc.team4999.lights.AnimationCompositor;
 import org.usfirst.frc.team4999.lights.BrightnessFilter;
 import org.usfirst.frc.team4999.lights.Color;
 import org.usfirst.frc.team4999.lights.animations.*;
 
 
-public class CoordinatorTest {
+public class CompositorTest {
 
     @Test
     public void testCoordinator() {
@@ -20,7 +20,7 @@ public class CoordinatorTest {
 
         TestAnimator an = new TestAnimator(display);
         
-        AnimationCoordinator coord = new AnimationCoordinator(an);
+        AnimationCompositor coord = new AnimationCompositor(an);
 
         Animation background = new BounceStack(new Color[] {Color.MOMENTUM_PURPLE, Color.MOMENTUM_PURPLE, Color.MOMENTUM_BLUE, Color.MOMENTUM_BLUE}, 8, 40);
 
@@ -70,7 +70,7 @@ public class CoordinatorTest {
 
         TestAnimator an = new TestAnimator(display);
         
-        AnimationCoordinator coord = new AnimationCoordinator(an);
+        AnimationCompositor coord = new AnimationCompositor(an);
         an.displayFrames(6);
 
         Animation solid_blue = new Solid(Color.BLUE);
@@ -112,7 +112,7 @@ public class CoordinatorTest {
 
         TestAnimator an = new TestAnimator(display);
         
-        AnimationCoordinator coord = new AnimationCoordinator(an);
+        AnimationCompositor coord = new AnimationCompositor(an);
         an.displayFrames(6);
 
         Animation solid_blue = new Solid(Color.BLUE);
@@ -137,7 +137,7 @@ public class CoordinatorTest {
 
         TestAnimator an = new TestAnimator(display);
         
-        AnimationCoordinator coord = new AnimationCoordinator(an);
+        AnimationCompositor coord = new AnimationCompositor(an);
 
         Animation hatch_preset_mode_overlay = new Overlay(new Animation[] {
             new ClippedAnimation(new Solid(Color.YELLOW), 10, 10),

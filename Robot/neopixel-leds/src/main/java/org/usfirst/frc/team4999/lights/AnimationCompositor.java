@@ -10,7 +10,7 @@ import org.usfirst.frc.team4999.lights.animations.Animation;
 import org.usfirst.frc.team4999.lights.animations.Overlay;
 import org.usfirst.frc.team4999.lights.animations.Solid;
 
-public class AnimationCoordinator {
+public class AnimationCompositor {
     private static final Animation base = new Solid(Color.BLACK);
 
     private final class AnimationHolder {
@@ -52,7 +52,7 @@ public class AnimationCoordinator {
 
     private ArrayList<Animation> visibleAnimations;
 
-    public AnimationCoordinator(Animator animator) {
+    public AnimationCompositor(Animator animator) {
         animationTable = new HashMap<String, AnimationHolder>();
         priorityTable = new HashMap<Integer, AnimationHolder>();
         animationStack = new Vector<String>();
@@ -63,7 +63,7 @@ public class AnimationCoordinator {
         updateAnimator();
     }
 
-    public AnimationCoordinator() {
+    public AnimationCompositor() {
         this(null);
     }
 
