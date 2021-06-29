@@ -6,6 +6,9 @@ import org.usfirst.frc.team4999.lights.BrightnessFilter;
 import org.usfirst.frc.team4999.lights.Color;
 import org.usfirst.frc.team4999.lights.animations.*;
 import org.usfirst.frc.team4999.lights.compositor.AnimationCompositor;
+import org.usfirst.frc.team4999.lights.compositor.FullScreenView;
+import org.usfirst.frc.team4999.lights.compositor.View;
+import org.usfirst.frc.team4999.lights.compositor.WindowView;
 
 
 public class CompositorTest {
@@ -24,36 +27,36 @@ public class CompositorTest {
 
         Animation background = new BounceStack(new Color[] {Color.MOMENTUM_PURPLE, Color.MOMENTUM_PURPLE, Color.MOMENTUM_BLUE, Color.MOMENTUM_BLUE}, 8, 40);
 
-        coord.popAnimation("DNE Animation");
+        coord.hideView("DNE Animation");
 
-        coord.pushAnimation("Background", background, 1, false);
+        coord.showView("Background", new FullScreenView(background), 1);
         an.displayFrames(50);
 
-        Animation greenSection = new ClippedAnimation(new Solid(Color.GREEN), 15, 30);
-        coord.pushAnimation("Green Section", greenSection, 10, true);
+        View greenWindow = new WindowView(new ClippedAnimation(new Solid(Color.GREEN), 15, 30));
+        coord.showView("Green Section", greenWindow, 10);
         an.displayFrames(50);
 
         Animation rainbow = Snake.rainbowSnake(50);
-        coord.pushAnimation("RainbowSnake", rainbow, 100, false);
+        coord.showView("RainbowSnake", new FullScreenView(rainbow), 100);
         an.displayFrames(50);
 
-        Animation fader = new ClippedAnimation(new Fade(new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 1000, 100), 5, 25);
-        coord.pushAnimation("Fader", fader, 500, true);
+        Animation fader = new Fade(new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 1000, 100);
+        coord.showView("Fader", WindowView.makeClippedWindow(fader, 5, 25), 500);
         an.displayFrames(50);
 
-        coord.popAnimation("Green Section");
-        coord.pushAnimation("Green Section", greenSection, 700, true);
+        coord.hideView("Green Section");
+        coord.showView("Green Section", greenWindow, 700);
         an.displayFrames(50);
 
-        coord.popAnimation("Background");
-        coord.pushAnimation("Background", new Solid(Color.RED), 1, false);
+        coord.hideView("Background");
+        coord.showView("Background", new FullScreenView(new Solid(Color.RED)), 1);
         an.displayFrames(50);
 
-        coord.popAnimation("DNE Animation");
+        coord.hideView("DNE Animation");
 
-        coord.popAnimation("Fader");
-        coord.popAnimation("Green Section");
-        coord.popAnimation("RainbowSnake");
+        coord.hideView("Fader");
+        coord.hideView("Green Section");
+        coord.hideView("RainbowSnake");
         an.displayFrames(10);
         
         //an.display.writeToFile("Coordinator");
@@ -74,28 +77,29 @@ public class CompositorTest {
         an.displayFrames(6);
 
         Animation solid_blue = new Solid(Color.BLUE);
-        coord.pushAnimation("Solid Blue", solid_blue, 1, false);
+        coord.showView("Solid Blue", new FullScreenView(solid_blue), 1);
         an.displayFrames(6);
 
         Animation solid_rainbow = Solid.rainbow();
-        coord.pushAnimation("Rainbow", solid_rainbow, 10, false);
+        coord.showView("Rainbow", new FullScreenView(solid_rainbow), 10);
         an.displayFrames(6);
 
         Animation solid_green = new Solid(Color.GREEN);
-        coord.pushAnimation("Solid Green", solid_green, 1, false);
+        coord.hideView("Solid Blue");
+        coord.showView("Solid Green", new FullScreenView(solid_green), 1);
 
         Animation stack = new Stack(new Color[]{Color.GREEN, Color.BLUE, Color.RED}, 10, 200);
-        coord.pushAnimation("Stack", stack, 5, false);
+        coord.showView("Stack", new FullScreenView(stack), 5);
         an.displayFrames(6);
         
         Animation rainbow_overlay = new ClippedAnimation(Snake.rainbowSnake(200), 5, 25);
-        coord.pushAnimation("Rainbow overlay", rainbow_overlay, 20, true);
+        coord.showView("Rainbow overlay", new WindowView(rainbow_overlay), 20);
         an.displayFrames(25);
 
-        coord.popAnimation("Rainbow");
+        coord.hideView("Rainbow");
         an.displayFrames(25);
 
-        coord.popAnimation("Stack");
+        coord.hideView("Stack");
         an.displayFrames(25);
         
         //an.display.writeToFile("CoordinatorPriorities");
@@ -116,75 +120,14 @@ public class CompositorTest {
         an.displayFrames(6);
 
         Animation solid_blue = new Solid(Color.BLUE);
-        coord.pushAnimation("Solid Blue", solid_blue, 1, true);
+        coord.showView("Solid Blue", new FullScreenView(solid_blue), 1);
         an.displayFrames(6);
 
         Animation rainbow_overlay = new ClippedAnimation(Snake.rainbowSnake(200), 10, 40);
-        coord.pushAnimation("Rainbow Overlay", rainbow_overlay, 10, false);
+        coord.showView("Rainbow Overlay", new FullScreenView(rainbow_overlay), 10);
         an.displayFrames(25);
         
         //an.display.writeToFile("CoordinatorFalseTransparency");
         comparator.compareToFile("CoordinatorFalseTransparency");
-    }
-
-    @Test
-    public void testHasAnimation() {
-        BrightnessFilter.setBrightness(1);
-
-        BufferDisplay display = new BufferDisplay(80);
-        PixelComparator comparator = new PixelComparator();
-        display.addBufferListener(comparator);
-
-        TestAnimator an = new TestAnimator(display);
-        
-        AnimationCompositor coord = new AnimationCompositor(an);
-
-        Animation hatch_preset_mode_overlay = new Overlay(new Animation[] {
-            new ClippedAnimation(new Solid(Color.YELLOW), 10, 10),
-            new ClippedAnimation(new Solid(Color.YELLOW), 40, 10) });
-        Animation cargo_preset_mode_overlay = new Overlay(new Animation[] {
-            new ClippedAnimation(new Solid(Color.RED), 10, 10),
-            new ClippedAnimation(new Solid(Color.RED), 40, 10) });
-
-        // disabled()
-        for(int i = 0; i < 10; i++) {
-            if (coord.hasAnimation("hatch_preset_mode"))
-                coord.popAnimation("hatch_preset_mode");
-            if (coord.hasAnimation("cargo_preset_mode"))
-                coord.popAnimation("cargo_preset_mode");
-
-            an.displayFrames(2);
-        }
-
-        // selectHatchPresetMode()
-        for(int i = 0; i < 10; i++) {
-            if (!coord.hasAnimation("hatch_preset_mode"))
-                coord.pushAnimation("hatch_preset_mode", hatch_preset_mode_overlay, 10, true);
-            an.displayFrames(2);
-        }
-
-        // selectCargoPresetMode()
-        for(int i = 0; i < 10; i++) {
-            if (!coord.hasAnimation("cargo_preset_mode"))
-                coord.pushAnimation("cargo_preset_mode", cargo_preset_mode_overlay, 10, true);
-            an.displayFrames(2);
-        }
-
-        // selectHatchPresetMode()
-        for(int i = 0; i < 10; i++) {
-            if (!coord.hasAnimation("hatch_preset_mode"))
-                coord.pushAnimation("hatch_preset_mode", hatch_preset_mode_overlay, 10, true);
-            an.displayFrames(2);
-        }
-
-        // selectCargoPresetMode()
-        for(int i = 0; i < 10; i++) {
-            if (!coord.hasAnimation("cargo_preset_mode"))
-                coord.pushAnimation("cargo_preset_mode", cargo_preset_mode_overlay, 10, true);
-            an.displayFrames(2);
-        }
-
-        //an.display.writeToFile("CoordinatorHasAnimation");
-        comparator.compareToFile("CoordinatorHasAnimation");
     }
 }

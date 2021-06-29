@@ -1,12 +1,13 @@
 package org.usfirst.frc.team4999.tools;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 import org.usfirst.frc.team4999.tools.gui.DiffShower;
 import org.usfirst.frc.team4999.lights.Color;
+
+import java.awt.GraphicsEnvironment;
 
 import static org.junit.Assert.fail;
 
@@ -33,7 +34,7 @@ public class PixelComparator implements BufferDisplay.BufferUpdateListener {
         }
     }
     public void compareToFile(String filename) {
-        compareToFile(filename, true);
+        compareToFile(filename, GraphicsEnvironment.isHeadless());
     }
 
     public void compareToFile(String name, boolean headless) {

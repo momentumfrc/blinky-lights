@@ -1,10 +1,8 @@
 package org.usfirst.frc.team4999.lights.compositor;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Vector;
+import java.util.TreeSet;
 
 import org.usfirst.frc.team4999.lights.Animator;
 import org.usfirst.frc.team4999.lights.Color;
@@ -23,50 +21,49 @@ public class AnimationCompositor {
      */
     private static final Animation base = new Solid(Color.BLACK);
 
-    private final class AnimationHolder {
-        private String key;
-        private Animation animation;
-        private int priority;
-        private boolean transparent;
+    private static class ViewHolder implements Comparable<ViewHolder> {
+        public final String key;
+        public final View view;
+        public final int z_idx;
         
-        public AnimationHolder(String key, Animation animation, int priority, boolean transparent) {
+        public ViewHolder(String key, View view, int z_idx) {
             this.key = key;
-            this.animation = animation;
-            this.priority = priority;
-            this.transparent = transparent;
+            this.view = view;
+            this.z_idx = z_idx;
         }
 
-        public String getKey() {
-            return key;
+        @Override
+        public int compareTo(ViewHolder o) {
+            return o.z_idx - z_idx;
         }
 
-        public Animation getAnimation() {
-            return animation;
+        @Override
+        public boolean equals(Object o) {
+            if(o instanceof ViewHolder) {
+                ViewHolder ovh = (ViewHolder) o;
+                return ovh.key.equals(key)
+                    && ovh.view.equals(ovh)
+                    && ovh.z_idx == z_idx;
+            }
+            return false;
         }
 
-        public int getPriority() {
-            return priority;
-        }
-
-        public boolean isTransparent() {
-            return transparent;
+        @Override
+        public int hashCode() {
+            return java.util.Objects.hash(key, view, z_idx);
         }
     }
 
     private Animator animator;
 
-    private HashMap<String, AnimationHolder> animationTable;
-    private HashMap<Integer, AnimationHolder> priorityTable;
-    private Vector<String> animationStack;
-    private Comparator<String> animationStackSorter = (s1, s2) -> {return animationTable.get(s1).getPriority() - animationTable.get(s2).getPriority();};
+    private HashMap<String, ViewHolder> animationTable;
 
-    private ArrayList<Animation> visibleAnimations;
+    // NOTE: The animationStack is ordered with highest z_idx first
+    private TreeSet<ViewHolder> animationStack;
 
     public AnimationCompositor(Animator animator) {
-        animationTable = new HashMap<String, AnimationHolder>();
-        priorityTable = new HashMap<Integer, AnimationHolder>();
-        animationStack = new Vector<String>();
-        visibleAnimations = new ArrayList<Animation>();
+        animationTable = new HashMap<>();
+        animationStack = new TreeSet<>();
 
         this.animator = animator;
 
@@ -77,49 +74,61 @@ public class AnimationCompositor {
         this(null);
     }
 
-    public void pushAnimation(String key, Animation animation, int priority, boolean transparent) {
-        if(animationTable.containsKey(key)) {
-            return;
-        }
-        if(priorityTable.containsKey(priority)) {
-            popAnimation(priorityTable.get(priority).getKey());
-        }
+    /**
+     * Show a view in the compositor on top of all other views
+     * @param key The key referring to this view
+     * @param view The view to show
+     */
+    public void showView(String key, View view) {
+        showView(key, view, animationStack.first().z_idx + 1);
+    }
 
-        AnimationHolder holder = new AnimationHolder(key, animation, priority, transparent);
+    /**
+     * Show a view in the compositor.
+     * <p>
+     * The z_idx value controls the vertical stacking of overlapping views. Views with
+     * a higher z_idx will be shown over views with a lower z_idx. NOTE: The order of 
+     * overlapping views with equal z_idx values is undefined.
+     * @param key The key referring to this view
+     * @param view The view to show
+     * @param z_idx The value controlling the vertical stacking of overlapping views
+     */
+    public void showView(String key, View view, int z_idx) {
+        if(animationTable.containsKey(key))
+            hideView(key);
+        ViewHolder holder = new ViewHolder(key, view, z_idx);
         animationTable.put(key, holder);
-        priorityTable.put(priority, holder);
-        animationStack.add(key);
-
-        Collections.sort(animationStack, animationStackSorter);
+        animationStack.add(holder);
 
         updateAnimator();
     }
 
-    public Animation popAnimation(String key) {
-        AnimationHolder holder;
-
+    /**
+     * Remove a view from the compositor.
+     * @param key The key referring to the view to remove
+     */
+    public void hideView(String key) {
         if(!animationTable.containsKey(key))
-            return null;
-        
-        animationStack.removeElement(key);
-        holder = animationTable.remove(key);
-        priorityTable.remove(holder.getPriority());
+            return;
+        ViewHolder holder = animationTable.get(key);
+        animationTable.remove(key);
+        animationStack.remove(holder);
 
         updateAnimator();
-
-        return holder.getAnimation();
     }
 
+    /**
+     * Get an Animation showing the composited Views. The resulting Animation is ready to be passed
+     * to the {@link org.usfirst.frc.team4999.lights.Animator}
+     * @return The composited Animation
+     */
     public Animation getCurrentAnimation() {
-        visibleAnimations.clear();
-
-
-        for(int i = animationStack.size() - 1; i >= 0; i--) {
-            AnimationHolder curr = animationTable.get(animationStack.get(i));
-            visibleAnimations.add(curr.getAnimation());
-            if(!curr.isTransparent()) {
+        ArrayList<Animation> visibleAnimations = new ArrayList<>();
+        
+        for(ViewHolder vh : animationStack) {
+            visibleAnimations.add(vh.view.getAnimation());
+            if(!vh.view.hasTransparency())
                 break;
-            }
         }
 
         visibleAnimations.add(base);
@@ -138,8 +147,13 @@ public class AnimationCompositor {
         }
     }
 
-    public boolean hasAnimation(String key) {
-        return animationTable.containsKey(key);
+    /**
+     * Get a shown view
+     * @param key The key referring to the view
+     * @return The view
+     */
+    public View getView(String key) {
+        return animationTable.get(key).view;
     }
 
 }
