@@ -1,4 +1,4 @@
-package org.usfirst.frc.team4999.lights;
+package org.usfirst.frc.team4999.lights.compositor;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,11 +6,21 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Vector;
 
+import org.usfirst.frc.team4999.lights.Animator;
+import org.usfirst.frc.team4999.lights.Color;
 import org.usfirst.frc.team4999.lights.animations.Animation;
 import org.usfirst.frc.team4999.lights.animations.Overlay;
 import org.usfirst.frc.team4999.lights.animations.Solid;
 
+/**
+ * Composes component {@link View}s into one {@link org.usfirst.frc.team4999.lights.animations.Animation},
+ * and sends the composed Animation to the {@link org.usfirst.frc.team4999.lights.Animator}.
+ */
 public class AnimationCompositor {
+
+    /**
+     * The animation which will be shown if no other View occupies that part of the LED strip.
+     */
     private static final Animation base = new Solid(Color.BLACK);
 
     private final class AnimationHolder {
