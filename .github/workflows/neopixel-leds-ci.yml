@@ -4,9 +4,7 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
       with:
@@ -18,3 +16,4 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew test
       working-directory: ./Robot/neopixel-leds
+

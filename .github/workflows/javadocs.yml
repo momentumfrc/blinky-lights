@@ -1,0 +1,36 @@
+name: Publish javadocs
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+ docs:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: false
+        path: master
+    - uses: actions/checkout@v2
+      with:
+        submodules: false
+        path: gh-pages
+        ref: gh-pages
+    - name: Setup JDK 11
+      uses: actions/setup-java@v1
+      with:
+        java-version: 11
+    - name: Generate javadoc
+      run: ./gradlew javadoc
+      working-directory: ./master/Robot/neopixel-leds
+    - name: Copy javadoc
+      run: cp -r ./master/Robot/neopixel-leds/build/docs/javadoc ./gh-pages/
+    - name: Commit updated javadoc
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: 'javadoc'
+        default_author: github_actions
+        message: 'Publish javadoc'
+        cwd: ./gh-pages

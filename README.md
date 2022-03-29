@@ -22,4 +22,4 @@ For more details, see [hardware.md](docs/hardware.md)
 
 ## API
 
-The javadocs can be accessed [here](https://raw.githubusercontent.com/momentumfrc/blinky-lights/docs/Robot/neopixel-leds/docs/index.html).
+The javadocs can be accessed [here](https://momentumfrc.github.io/blinky-lights/javadoc).

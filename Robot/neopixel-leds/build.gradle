@@ -47,7 +47,7 @@ publishing {
 
 javadoc {
     source = sourceSets.main.allJava
-    destinationDir = layout.projectDirectory.dir("docs").asFile
+    failOnError = false
 }
 
 publish {
