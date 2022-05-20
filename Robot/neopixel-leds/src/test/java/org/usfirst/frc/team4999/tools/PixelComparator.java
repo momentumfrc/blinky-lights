@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Vector;
 
 import org.usfirst.frc.team4999.tools.gui.DiffShower;
+import org.usfirst.frc.team4999.lights.BufferDisplay;
 import org.usfirst.frc.team4999.lights.Color;
 
 import java.awt.GraphicsEnvironment;

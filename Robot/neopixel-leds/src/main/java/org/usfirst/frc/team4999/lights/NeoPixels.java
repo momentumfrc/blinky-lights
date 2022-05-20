@@ -56,32 +56,31 @@ public class NeoPixels implements Display {
 		}
 		return instance;
 	}
-	
+
 	private NeoPixels() {
 		strip = new NeoPixelsIO(I2C.Port.kOnboard, I2C_ADDRESS);
-		
+
 		syncPacket = new SyncCommand().build();
 	}
-	
-	synchronized public void show(Packet[] commands) {
+
+	synchronized public void show(Command[] commands) {
 		try {
 			// Send a sync packet every SYNC_FREQ frames
 			if(++syncidx >= SYNC_FREQ) {
 				strip.writePacket(syncPacket);
 				syncidx = 0;
 			}
-			
-			// Send each packet
-			for(Packet packet : commands) {
-				strip.writePacket(packet);
+
+			for(Command packet : commands) {
+				strip.writePacket(packet.build());
 			}
-			
+
 		} catch (Exception e) {
 			// The generic try-catch prevents an error in the purely cosmetic neopixels from killing the whole robot
 			System.err.println(e.getMessage());
 			e.printStackTrace(System.err);
 		}
-		
+
 	}
 
 }

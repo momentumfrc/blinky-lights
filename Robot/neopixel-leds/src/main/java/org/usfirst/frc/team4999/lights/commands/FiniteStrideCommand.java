@@ -24,6 +24,26 @@ public class FiniteStrideCommand extends Command {
         this.totalLength = totalLength;
     }
 
+    public int getAddress() {
+        return address;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public int getLength() {
+        return length;
+    }
+
+    public int getStride() {
+        return stride;
+    }
+
+    public int getTotalLength() {
+        return totalLength;
+    }
+
     @Override
     public Packet build() {
         byte[] data = {

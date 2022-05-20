@@ -3,6 +3,7 @@ package org.usfirst.frc.team4999.tests;
 import org.junit.Test;
 import org.usfirst.frc.team4999.tools.*;
 import org.usfirst.frc.team4999.lights.BrightnessFilter;
+import org.usfirst.frc.team4999.lights.BufferDisplay;
 import org.usfirst.frc.team4999.lights.Color;
 import org.usfirst.frc.team4999.lights.animations.*;
 import org.usfirst.frc.team4999.lights.compositor.AnimationCompositor;

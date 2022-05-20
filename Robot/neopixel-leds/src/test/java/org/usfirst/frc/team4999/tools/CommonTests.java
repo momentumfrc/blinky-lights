@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.usfirst.frc.team4999.lights.BrightnessFilter;
+import org.usfirst.frc.team4999.lights.BufferDisplay;
 import org.usfirst.frc.team4999.lights.animations.Animation;
 import org.usfirst.frc.team4999.tools.gui.BufferShower;
 

@@ -48,10 +48,10 @@ public class TestAnimator extends Animator {
     public void displayFrames(int numFrames, boolean shouldSleep) {
         for(int i = 0; i < numFrames; i++) {
             Command[] commands = current.getNextFrame();
-			Packet[] builtCommands = Stream.concat(Arrays.stream(commands), Stream.of(showCommand)).map(Command::build).toArray(Packet[]::new);
-			display.show(builtCommands);
+			Command[] commandSequence = Stream.concat(Arrays.stream(commands), Stream.of(showCommand)).toArray(Command[]::new);
+			display.show(commandSequence);
 			int delay = current.getFrameDelayMilliseconds();
-			
+
 			if(delay < 0 ) System.out.println("Animation returned a delay less than 0... interpreting as no delay");
 			if(shouldSleep && delay > 0) {
                 try {

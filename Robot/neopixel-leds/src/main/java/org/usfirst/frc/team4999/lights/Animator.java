@@ -33,13 +33,13 @@ class AnimatorThread extends Thread {
 			Animation animation = current;
 			// show current frame
 			Command[] commands = animation.getNextFrame();
-			Packet[] builtCommands = Stream.concat(Arrays.stream(commands), Stream.of(showCommand)).map(Command::build).toArray(Packet[]::new);
-			out.show(builtCommands);
+			Command[] commandSequence = Stream.concat(Arrays.stream(commands), Stream.of(showCommand)).toArray(Command[]::new);
+			out.show(commandSequence);
 			// get how long to delay for
 			int delay = animation.getFrameDelayMilliseconds();
-			
+
 			if(delay < 0 ) System.out.println("Animation returned a delay less than 0... interpreting as no delay");
-			
+
 			// Account for transmission time before delaying
 			delay -= (System.currentTimeMillis() - millis);
 			if (delay > 0) {

@@ -14,10 +14,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import org.usfirst.frc.team4999.lights.BufferDisplay;
 import org.usfirst.frc.team4999.tools.*;
 
 public class BufferShower implements BufferDisplay.BufferUpdateListener {
-    
+
     // The actual component displayed in the JFrame
     public class BufferShowerComponent extends JComponent implements BufferDisplay.BufferUpdateListener {
 
