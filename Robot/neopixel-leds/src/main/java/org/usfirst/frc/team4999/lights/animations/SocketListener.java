@@ -14,93 +14,93 @@ import org.usfirst.frc.team4999.lights.commands.Command;
 import org.usfirst.frc.team4999.lights.commands.RawCommand;
 
 public class SocketListener implements Animation {
-	
-	private ArrayList<Packet> completedPackets;
-	private ArrayList<Packet> buildingPackets;
-	
-	private int currentWait = 1000;
-	
-	private Thread listener;
 
-	public SocketListener() {
-		this(5800);
-	}
+    private ArrayList<Packet> completedPackets;
+    private ArrayList<Packet> buildingPackets;
 
-	public SocketListener(int port) {
-		buildingPackets = new ArrayList<Packet>();
-		completedPackets = new ArrayList<Packet>();
-		listener = new Thread() {
-			ByteBuffer buff = ByteBuffer.allocate(16);
-			
-			ArrayList<Packet> tmp;
-			
-			@Override
-			public void run() {
-				try( 
-					ServerSocket serverSocket = new ServerSocket(port);
-				) {
-					while(!Thread.interrupted() ) {
-						try (
-							Socket clientSocket = serverSocket.accept();
-							OutputStream out = clientSocket.getOutputStream();
-							InputStream in = clientSocket.getInputStream();
-						) {
-							while(!clientSocket.isClosed()) {
-								byte inByte = (byte)in.read();
-								if(inByte == 0x01) {
-									buff.clear();
-									in.read(buff.array());
-									synchronized(buildingPackets) {
-										buildingPackets.add(new Packet(buff.array()));
-									}
-								} else if(inByte == 0x02) {
-									synchronized(completedPackets) {
-										tmp = completedPackets;
-										completedPackets = buildingPackets;
-										buildingPackets = tmp;
-										buildingPackets.clear();
-									}
-								} else if(inByte == 0x03) {
-									buff.clear();
-									in.read(buff.array(), 0, 4);
-									currentWait = buff.getInt(0);
-									System.out.println("Set waittime to " + currentWait);
-								}
-							}
-							try {
-								Thread.sleep(10);
-							} catch (InterruptedException e) {
-								break;
-							}
-						} catch (SocketException e) {
-							System.out.println("Lost connection");
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		listener.start();
-	}
+    private int currentWait = 1000;
 
-	@Override
-	public Command[] getNextFrame() {
-		synchronized(completedPackets) {
-			//System.out.println(completedPackets);
-			Command[] out = new Command[completedPackets.size()];
-			for(int i = 0; i < out.length; i++) {
-				out[i] = new RawCommand(completedPackets.get(i));
-			}
-			return out;
-		}
-	}
+    private Thread listener;
 
-	@Override
-	public int getFrameDelayMilliseconds() {
-		return currentWait;
-	}
+    public SocketListener() {
+        this(5800);
+    }
+
+    public SocketListener(int port) {
+        buildingPackets = new ArrayList<Packet>();
+        completedPackets = new ArrayList<Packet>();
+        listener = new Thread() {
+            ByteBuffer buff = ByteBuffer.allocate(16);
+
+            ArrayList<Packet> tmp;
+
+            @Override
+            public void run() {
+                try(
+                    ServerSocket serverSocket = new ServerSocket(port);
+                ) {
+                    while(!Thread.interrupted() ) {
+                        try (
+                            Socket clientSocket = serverSocket.accept();
+                            OutputStream out = clientSocket.getOutputStream();
+                            InputStream in = clientSocket.getInputStream();
+                        ) {
+                            while(!clientSocket.isClosed()) {
+                                byte inByte = (byte)in.read();
+                                if(inByte == 0x01) {
+                                    buff.clear();
+                                    in.read(buff.array());
+                                    synchronized(buildingPackets) {
+                                        buildingPackets.add(new Packet(buff.array()));
+                                    }
+                                } else if(inByte == 0x02) {
+                                    synchronized(completedPackets) {
+                                        tmp = completedPackets;
+                                        completedPackets = buildingPackets;
+                                        buildingPackets = tmp;
+                                        buildingPackets.clear();
+                                    }
+                                } else if(inByte == 0x03) {
+                                    buff.clear();
+                                    in.read(buff.array(), 0, 4);
+                                    currentWait = buff.getInt(0);
+                                    System.out.println("Set waittime to " + currentWait);
+                                }
+                            }
+                            try {
+                                Thread.sleep(10);
+                            } catch (InterruptedException e) {
+                                break;
+                            }
+                        } catch (SocketException e) {
+                            System.out.println("Lost connection");
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        listener.start();
+    }
+
+    @Override
+    public Command[] getNextFrame() {
+        synchronized(completedPackets) {
+            //System.out.println(completedPackets);
+            Command[] out = new Command[completedPackets.size()];
+            for(int i = 0; i < out.length; i++) {
+                out[i] = new RawCommand(completedPackets.get(i));
+            }
+            return out;
+        }
+    }
+
+    @Override
+    public int getFrameDelayMilliseconds() {
+        return currentWait;
+    }
 
 }

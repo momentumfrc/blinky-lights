@@ -18,16 +18,16 @@ public class ClipTests {
         Animation background = new Solid(Color.WHITE);
         Animation strideAnimation = new Animation() {
 
-			@Override
-			public Command[] getNextFrame() {
-				return new Command[] {new StrideCommand(0, Color.BLACK, 2, 4).dim()};
-			}
+            @Override
+            public Command[] getNextFrame() {
+                return new Command[] {new StrideCommand(0, Color.BLACK, 2, 4).dim()};
+            }
 
-			@Override
-			public int getFrameDelayMilliseconds() {
-				return 500;
-			}
-            
+            @Override
+            public int getFrameDelayMilliseconds() {
+                return 500;
+            }
+
         };
         Animation clipAnimation = new ClippedAnimation(strideAnimation, 5, 4);
         Animation overlay = new Overlay(new Animation[]{background, clipAnimation});
@@ -40,16 +40,16 @@ public class ClipTests {
         Animation background = new Solid(Color.WHITE);
         Animation strideAnimation = new Animation() {
 
-			@Override
-			public Command[] getNextFrame() {
-				return new Command[] {new StrideCommand(3, Color.BLACK, 2, 4).dim()};
-			}
+            @Override
+            public Command[] getNextFrame() {
+                return new Command[] {new StrideCommand(3, Color.BLACK, 2, 4).dim()};
+            }
 
-			@Override
-			public int getFrameDelayMilliseconds() {
-				return 500;
-			}
-            
+            @Override
+            public int getFrameDelayMilliseconds() {
+                return 500;
+            }
+
         };
         Animation clipAnimation = new ClippedAnimation(strideAnimation, 1, 5);
         Animation overlay = new Overlay(new Animation[]{background, clipAnimation});
@@ -62,16 +62,16 @@ public class ClipTests {
         Animation background = new Solid(Color.WHITE);
         Animation strideAnimation = new Animation() {
 
-			@Override
-			public Command[] getNextFrame() {
-				return new Command[] {new StrideCommand(1, Color.BLACK, 2, 4).dim()};
-			}
+            @Override
+            public Command[] getNextFrame() {
+                return new Command[] {new StrideCommand(1, Color.BLACK, 2, 4).dim()};
+            }
 
-			@Override
-			public int getFrameDelayMilliseconds() {
-				return 500;
-			}
-            
+            @Override
+            public int getFrameDelayMilliseconds() {
+                return 500;
+            }
+
         };
         Animation clipAnimation = new ClippedAnimation(strideAnimation, 5, 16);
         Animation overlay = new Overlay(new Animation[]{background, clipAnimation});

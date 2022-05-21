@@ -41,7 +41,7 @@ public class StrideCommand extends Command {
     public Packet build() {
         byte[] data = {
             SET_STRIDE,
-            intToByte(address), 
+            intToByte(address),
             intToByte(color.getRed()),
             intToByte(color.getGreen()),
             intToByte(color.getBlue()),
@@ -68,7 +68,7 @@ public class StrideCommand extends Command {
         int offset = address % stride;
 
         // If the clipped region starts in the middle of a stride, it breaks the pattern
-        //                                0 1 2 3 4 5 6 7 8 9 
+        //                                0 1 2 3 4 5 6 7 8 9
         // Imagine this is the pattern: [ X X - - X X - - X X ]
         // Imagine we want to clip here:           |         |
         // We need to somehow paint index 5 without painting index 4
@@ -93,9 +93,9 @@ public class StrideCommand extends Command {
         if(strideLength > 0) {
             out.add(new FiniteStrideCommand(strideAddr, color, length, stride, strideLength));
         }
-        
+
         return out.toArray(new Command[]{});
 
     }
-    
+
 }

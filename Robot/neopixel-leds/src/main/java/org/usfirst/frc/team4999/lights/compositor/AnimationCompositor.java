@@ -25,7 +25,7 @@ public class AnimationCompositor {
         public final String key;
         public final View view;
         public final int z_idx;
-        
+
         public ViewHolder(String key, View view, int z_idx) {
             this.key = key;
             this.view = view;
@@ -87,7 +87,7 @@ public class AnimationCompositor {
      * Show a view in the compositor.
      * <p>
      * The z_idx value controls the vertical stacking of overlapping views. Views with
-     * a higher z_idx will be shown over views with a lower z_idx. NOTE: The order of 
+     * a higher z_idx will be shown over views with a lower z_idx. NOTE: The order of
      * overlapping views with equal z_idx values is undefined.
      * @param key The key referring to this view
      * @param view The view to show
@@ -124,7 +124,7 @@ public class AnimationCompositor {
      */
     public Animation getCurrentAnimation() {
         ArrayList<Animation> visibleAnimations = new ArrayList<>();
-        
+
         for(ViewHolder vh : animationStack) {
             visibleAnimations.add(vh.view.getAnimation());
             if(!vh.view.hasTransparency())

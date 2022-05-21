@@ -23,7 +23,7 @@ public class ClippedAnimation implements Animation {
     @Override
     public Command[] getNextFrame() {
         commandBuffer.clear();
-        
+
         Command[] animationPackets = animation.getNextFrame();
         for(int i = 0; i < animationPackets.length; i++) {
             Command curr = animationPackets[i];

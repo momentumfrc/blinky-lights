@@ -22,7 +22,7 @@ public class SingleCommand extends Command {
     public int getAddress() {
         return address;
     }
-    
+
     public Color getColor() {
         return color;
     }
@@ -31,7 +31,7 @@ public class SingleCommand extends Command {
     public Packet build() {
         byte[] data = {
             SET_SINGLE,
-            intToByte(address), 
+            intToByte(address),
             intToByte(color.getRed()),
             intToByte(color.getGreen()),
             intToByte(color.getBlue())
@@ -52,5 +52,5 @@ public class SingleCommand extends Command {
             return new Command[] {this};
         }
     }
-    
+
 }

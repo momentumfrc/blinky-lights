@@ -11,7 +11,7 @@ public class ShowCommand extends Command {
         byte[] data = {
             DISPLAY_FRAME
         };
-		return new Packet(setSizeByte(data));
+        return new Packet(setSizeByte(data));
     }
 
     @Override
@@ -23,5 +23,5 @@ public class ShowCommand extends Command {
     public Command[] clip(int clipaddress, int cliplength) {
         throw new UnsupportedOperationException("Show command cannot be clipped");
     }
-    
+
 }

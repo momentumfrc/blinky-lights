@@ -34,7 +34,7 @@ public class RunCommand extends Command {
     public Packet build() {
         byte[] data = {
             SET_RUN,
-            intToByte(address), 
+            intToByte(address),
             intToByte(color.getRed()),
             intToByte(color.getGreen()),
             intToByte(color.getBlue()),
@@ -65,7 +65,7 @@ public class RunCommand extends Command {
         }
 
         outlength = outend - outstart;
-        
+
         if(outlength > 0) {
             return new Command[] {new RunCommand(outstart, this.color, outlength)};
         } else {

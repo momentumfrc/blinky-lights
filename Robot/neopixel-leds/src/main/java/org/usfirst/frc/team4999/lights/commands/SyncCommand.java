@@ -11,10 +11,10 @@ public class SyncCommand extends Command {
     @Override
     public Packet build() {
         byte[] data = new byte[16];
-		for(int i = 0; i < data.length; i++) {
-			data[i] = SYNC_BYTE;
-		}
-		return new Packet(data);
+        for(int i = 0; i < data.length; i++) {
+            data[i] = SYNC_BYTE;
+        }
+        return new Packet(data);
     }
 
     @Override
@@ -26,5 +26,5 @@ public class SyncCommand extends Command {
     public Command[] clip(int clipaddress, int cliplength) {
         throw new UnsupportedOperationException("Sync commands cannot be clipped");
     }
-    
+
 }

@@ -80,9 +80,9 @@ public class AnimationFileManager {
             try {
                 fileIn = new FileInputStream(file);
                 objectIn = new ObjectInputStream(fileIn);
-                
+
                 Object obj = objectIn.readObject();
-                readHistory = (Vector<java.awt.Color[]>) obj;        
+                readHistory = (Vector<java.awt.Color[]>) obj;
             } catch (Exception e) {
                 return;
             } finally {
@@ -147,7 +147,7 @@ public class AnimationFileManager {
             ).collect(Collectors.toList())
         );
     }
-    
+
     private static Path animationPathFromName(String name) {
         return Path.of(ANIMATION_FILE_LOCATION, String.format("%s.%s", name, ANIMATION_FILE_EXTENSION));
     }
@@ -174,7 +174,7 @@ public class AnimationFileManager {
             throw new IOException(String.format("No migration from %s to %s", value.version, ANIMATION_FILE_VERSION));
         }
         return animationToBufferList(value);
-    } 
+    }
 
     public static void saveFile(List<Color[]> animation, String name) throws IOException {
         ObjectMapper mapper = getObjectMapper();

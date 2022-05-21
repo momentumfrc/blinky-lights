@@ -15,7 +15,7 @@ public class VisualTests {
         new Color(255, 127, 0),
         Color.RED
     };
-    
+
     @Test
     public void testIndexingAnimation() {
         Color[] indexColors = new Color[10];
@@ -25,7 +25,7 @@ public class VisualTests {
         for(int i = 5; i < 10; i++) {
             indexColors[i] = Color.BLACK;
         }
-        
+
         Animation indexingAnimation = new Solid(indexColors);
         guiShowAnimation(indexingAnimation, 10);
     }

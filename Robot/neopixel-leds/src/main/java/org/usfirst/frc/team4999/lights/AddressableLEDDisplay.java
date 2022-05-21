@@ -33,8 +33,8 @@ public class AddressableLEDDisplay implements Display {
         leds.setData(buffer);
     }
 
-	@Override
-	public void show(Command[] commands) {
+    @Override
+    public void show(Command[] commands) {
         renderer.show(commands);
 
         Color[] renderedBuffer = renderer.getFrontBuffer();

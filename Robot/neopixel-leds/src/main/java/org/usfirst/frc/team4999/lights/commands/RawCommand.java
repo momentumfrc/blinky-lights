@@ -9,7 +9,7 @@ public class RawCommand extends Command {
 
     /**
      * A command that wraps a raw packet.
-     * 
+     *
      * @deprecated This class exists only for backwards compatibility with code
      *             which uses raw packets.
      */
@@ -31,5 +31,5 @@ public class RawCommand extends Command {
     public Command[] clip(int clipaddress, int cliplength) {
         throw new UnsupportedOperationException("RawCommand cannot be clipped");
     }
-    
+
 }

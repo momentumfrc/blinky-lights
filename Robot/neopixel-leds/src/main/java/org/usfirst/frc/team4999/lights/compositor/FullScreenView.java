@@ -8,7 +8,7 @@ import org.usfirst.frc.team4999.lights.animations.Animation;
  */
 public class FullScreenView implements View {
     private final Animation animation;
-    
+
     public FullScreenView(Animation animation) {
         this.animation = animation;
     }
@@ -22,5 +22,5 @@ public class FullScreenView implements View {
     public boolean hasTransparency() {
         return false;
     }
-    
+
 }

@@ -11,6 +11,7 @@ public class FiniteStrideCommand extends Command {
     private static final byte SET_STRIDE_RANGED = 0x05;
 
     private final int address;
+
     private final Color color;
     private final int length;
     private final int stride;
@@ -73,5 +74,5 @@ public class FiniteStrideCommand extends Command {
 
         return new StrideCommand(address, color, length, stride).clip(clipaddress, outLength);
     }
-    
+
 }

@@ -46,7 +46,7 @@ public class BufferShower implements BufferDisplay.BufferUpdateListener {
             super();
             showTestPattern();
         }
-        
+
         @Override
         public void paintComponent(Graphics gd) {
             Graphics2D g = (Graphics2D) gd;
@@ -63,22 +63,22 @@ public class BufferShower implements BufferDisplay.BufferUpdateListener {
                 g.fill(rect);
             }
         }
-        
+
         public void resize() {
             setPreferredSize(new Dimension(pixels.length * PIXEL_SIZE, PIXEL_SIZE * 2));
         }
-        
+
         @Override
         public void onBufferUpdated(org.usfirst.frc.team4999.lights.Color[] buffer) {
 
             pixels = Arrays.stream(buffer).map(c -> new Color(c.getRed(), c.getGreen(), c.getBlue())).toArray(Color[]::new);
-            
+
             resize();
-            
+
             revalidate();
             repaint();
         }
-        
+
     }
 
 
@@ -96,10 +96,10 @@ public class BufferShower implements BufferDisplay.BufferUpdateListener {
         shower = new BufferShowerComponent();
         frame.add(shower);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        
+
         frame.pack();
         frame.setVisible(true);
-        
+
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent arg) {
@@ -113,10 +113,10 @@ public class BufferShower implements BufferDisplay.BufferUpdateListener {
         addKeyListener(new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {}
-        
+
             @Override
             public void keyReleased(KeyEvent e) {}
-        
+
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_SPACE) {
@@ -161,5 +161,5 @@ public class BufferShower implements BufferDisplay.BufferUpdateListener {
             frame.pack();
         }
     }
-    
+
 }

@@ -14,7 +14,7 @@ public class Overlay implements Animation {
         public int remainingDelay;
         public boolean resetTiming;
         public Command[] currentFrame;
-        
+
         private AnimationTiming(Animation animation) {
             this.animation = animation;
             resetTiming = true;
@@ -41,8 +41,8 @@ public class Overlay implements Animation {
     @Override
     public Command[] getNextFrame() {
         commandBuffer.clear();
-        
-        for(int i = 0; i < animations.length; i++) { 
+
+        for(int i = 0; i < animations.length; i++) {
             if(animations[i].resetTiming) {
                 animations[i].currentFrame = animations[i].animation.getNextFrame();
             }
@@ -57,7 +57,7 @@ public class Overlay implements Animation {
     @Override
     public int getFrameDelayMilliseconds() {
 
-        for(int i = 0; i < animations.length; i++) { 
+        for(int i = 0; i < animations.length; i++) {
             AnimationTiming curr = animations[i];
             if(curr.resetTiming) {
                 curr.resetTiming = false;

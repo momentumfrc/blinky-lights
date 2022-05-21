@@ -22,7 +22,7 @@ public class PixelComparator implements BufferDisplay.BufferUpdateListener {
 
     @Override
     public void onBufferUpdated(Color[] buffer) {
-        
+
         displayHistory.add(buffer);
     }
 

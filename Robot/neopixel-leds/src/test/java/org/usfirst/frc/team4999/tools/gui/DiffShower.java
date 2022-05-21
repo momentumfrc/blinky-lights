@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
 import java.util.Arrays;
 
 public class DiffShower {
-    
+
     private static Object waitForButtonPressLock = new Object();
 
     private static Color[] convertMomentumColorToAwt(org.usfirst.frc.team4999.lights.Color[] in) {
