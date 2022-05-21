@@ -4,6 +4,13 @@ import java.util.ArrayList;
 
 import org.usfirst.frc.team4999.lights.commands.*;
 
+/**
+ * A meta-animation used to display one animation on top of another.
+ * <p>
+ * Note that, in order to overlay animation A on top of animation B,
+ * animation A must not consume the entire LED strip. This means that
+ * the Commands specified by animation A must leave some of the LEDs undrawn.
+ */
 public class Overlay implements Animation {
 
     private static final int delay_grouping = 5;
@@ -27,7 +34,10 @@ public class Overlay implements Animation {
     private ArrayList<Command> commandBuffer;
 
     /**
-     * Sends all the packets for all the animations. Animations with lower indices have their packets sent first.
+     * Construct an {@link Overlay} using the provided animations.
+     * Animations which occur later in the input array will be displayed over
+     * animations which occur earlier.
+     * @param animations the animations to overlay
      */
     public Overlay(Animation[] animations) {
         this.animations = new AnimationTiming[animations.length];

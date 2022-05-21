@@ -29,8 +29,12 @@ public class AnimationSequence implements Animation {
 
     /**
      * Loops through a series of animations
+     * <p>
+     * Note: A time must be specified for each animation. Thus,
+     * animations.length must equal times.length
+     *
      * @param animations the animations to run
-     * @param the time to wait for each animation. Should be equal in size to animations[]
+     * @param times the time to wait for each animation
      */
     public AnimationSequence(Animation[] animations, int[] times) {
         if (animations.length != times.length)

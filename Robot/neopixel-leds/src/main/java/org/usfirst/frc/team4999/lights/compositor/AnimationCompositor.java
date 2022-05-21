@@ -11,8 +11,10 @@ import org.usfirst.frc.team4999.lights.animations.Overlay;
 import org.usfirst.frc.team4999.lights.animations.Solid;
 
 /**
- * Composes component {@link View}s into one {@link org.usfirst.frc.team4999.lights.animations.Animation},
- * and sends the composed Animation to the {@link org.usfirst.frc.team4999.lights.Animator}.
+ * Composes component {@link View Views} into one
+ * {@link org.usfirst.frc.team4999.lights.animations.Animation Animation},
+ * and sends the composed Animation to the
+ * {@link org.usfirst.frc.team4999.lights.Animator Animator}.
  */
 public class AnimationCompositor {
 

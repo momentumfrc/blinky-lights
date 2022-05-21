@@ -7,7 +7,9 @@ import org.usfirst.frc.team4999.lights.animations.Animation;
  */
 public interface View {
     /**
-     * Get the held {@link org.usfirst.frc.team4999.lights.animations.Animation}
+     * Get the held
+     * {@link org.usfirst.frc.team4999.lights.animations.Animation Animation}
+     * @return the held animation
      */
     Animation getAnimation();
 
