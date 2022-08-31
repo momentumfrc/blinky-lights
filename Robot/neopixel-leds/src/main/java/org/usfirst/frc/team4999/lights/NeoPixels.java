@@ -2,6 +2,7 @@ package org.usfirst.frc.team4999.lights;
 
 
 import java.nio.ByteBuffer;
+import java.util.EnumMap;
 
 import org.usfirst.frc.team4999.lights.commands.Command;
 import org.usfirst.frc.team4999.lights.commands.SyncCommand;
@@ -37,7 +38,8 @@ public class NeoPixels implements Display {
 
     private NeoPixelsIO strip;
 
-    private static NeoPixels instance;
+    private static EnumMap<I2C.Port, NeoPixels> instances
+        = new EnumMap<>(I2C.Port.class);
 
     private final int I2C_ADDRESS = 16;
 
@@ -47,18 +49,31 @@ public class NeoPixels implements Display {
     Packet syncPacket;
 
     /**
-     * Gets an instance of NeoPixels
+     * Gets an instance of NeoPixels, defaulting to onboard I2C port
      * @return an instance of NeoPixels
      */
     public static NeoPixels getInstance() {
-        if(instance == null) {
-            instance = new NeoPixels();
-        }
-        return instance;
+        return getInstance(I2C.Port.kOnboard);
     }
 
-    private NeoPixels() {
-        strip = new NeoPixelsIO(I2C.Port.kOnboard, I2C_ADDRESS);
+    /**
+     * Gets an instance of NeoPixels that will communicate over the specified
+     * I2C port.
+     * @param port the I2C port to use to communicate with the NeoPixels
+     * @return an instance of NeoPixels
+     */
+    public static NeoPixels getInstance(I2C.Port port) {
+        if(instances.containsKey(port)) {
+            return instances.get(port);
+        } else {
+            NeoPixels instance = new NeoPixels(port);
+            instances.put(port, instance);
+            return instance;
+        }
+    }
+
+    private NeoPixels(I2C.Port port) {
+        strip = new NeoPixelsIO(port, I2C_ADDRESS);
 
         syncPacket = new SyncCommand().build();
     }
