@@ -109,4 +109,30 @@ public class ColorTools {
         return getGradient(gradientSize, stops);
     }
 
+    public static Color[] getColorTails(Color[] colors, Color background, int tailLen, int spacing) {
+        int totalLength = 1;
+        int stopsPerColor = 2;
+        if(tailLen == 0) {
+            tailLen = 1;
+        }
+        totalLength += tailLen;
+        if(spacing > 0) {
+            stopsPerColor += 1;
+            totalLength += spacing;
+        }
+
+        GradientStop[] stops = new GradientStop[colors.length * stopsPerColor];
+        for(int i = 0; i < colors.length; ++i) {
+            stops[i * stopsPerColor] = new GradientStop(i * totalLength, colors[i]);
+
+            stops[(i * stopsPerColor) + 1] = new GradientStop((i * totalLength) + tailLen, background);
+
+            if(spacing > 0) {
+                stops[(i * stopsPerColor) + 2] = new GradientStop((i * totalLength) + tailLen + spacing, background);
+            }
+        }
+
+        return getGradient(colors.length * (1 + tailLen + spacing), stops);
+    }
+
 }
