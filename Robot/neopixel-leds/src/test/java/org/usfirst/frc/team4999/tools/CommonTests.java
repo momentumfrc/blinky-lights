@@ -2,6 +2,7 @@ package org.usfirst.frc.team4999.tools;
 
 import java.awt.GraphicsEnvironment;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.usfirst.frc.team4999.lights.BrightnessFilter;
@@ -11,21 +12,33 @@ import org.usfirst.frc.team4999.tools.gui.BufferShower;
 
 public class CommonTests {
 
-    private static interface TestSteps {
+    public static interface TestSteps {
         public void setup(Test test);
         public void animate(Test test);
         public void tearDown(Test test);
     }
 
-    private static class Test {
+    public static class Test {
         public final BufferDisplay display;
         public final TestAnimator animator;
         private List<TestSteps> steps;
 
-        public Test(List<TestSteps> steps) {
+        public Test(List<TestSteps> steps, int numPix) {
             this.steps = steps;
-            display = new BufferDisplay(80);
+            display = new BufferDisplay(numPix);
             animator = new TestAnimator(display);
+        }
+
+        public Test(List<TestSteps> steps) {
+            this(steps, 80);
+        }
+
+        public Test(TestSteps[] steps) {
+            this(Arrays.asList(steps));
+        }
+
+        public Test(TestSteps[] steps, int numPix) {
+            this(Arrays.asList(steps), numPix);
         }
 
         public void run() {
@@ -41,7 +54,7 @@ public class CommonTests {
         }
     }
 
-    private static TestSteps makeHeadlessTestSteps(Animation animation, int frames) {
+    public static TestSteps makeHeadlessTestSteps(Animation animation, int frames) {
         return new TestSteps() {
             @Override
             public void setup(Test test) {
@@ -57,7 +70,7 @@ public class CommonTests {
         };
     }
 
-    private static TestSteps makeCompareToFileTestSteps(String file) {
+    public static TestSteps makeCompareToFileTestSteps(String file) {
         return new TestSteps() {
             PixelComparator comparator = new PixelComparator();
             @Override
@@ -73,7 +86,26 @@ public class CommonTests {
         };
     }
 
-    private static TestSteps makeShowGUITestSteps(Animation animation, int frames) {
+    public static TestSteps makeSaveToFileTestSteps(String file) {
+        return new TestSteps() {
+            PixelComparator comparator = new PixelComparator();
+            @Override
+            public void setup(Test test) {
+                test.display.addBufferListener(comparator);
+            }
+
+            @Override
+            public void animate(Test test) {}
+
+            @Override
+            public void tearDown(Test test) {
+                comparator.writeToFile(file);
+            }
+
+        };
+    }
+
+    public static TestSteps makeShowGUITestSteps(Animation animation, int frames) {
         return new TestSteps() {
             BufferShower gui = new BufferShower();
             @Override
