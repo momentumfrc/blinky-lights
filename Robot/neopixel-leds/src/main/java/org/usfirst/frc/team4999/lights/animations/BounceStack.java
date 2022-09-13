@@ -14,10 +14,11 @@ public class BounceStack implements Animation {
 
     int stopidx, startidx, currentidx;
 
-    Color background = Color.WHITE;
+    Color background;
 
-    public BounceStack(Color[] colors, int bgsize, int delay) {
+    public BounceStack(Color[] colors, Color background, int bgsize, int delay) {
         this.delay = delay;
+        this.background = background;
 
         buffer = new Color[colors.length+bgsize];
         int i = 0;
@@ -31,6 +32,10 @@ public class BounceStack implements Animation {
         startidx = 0;
         currentidx = startidx;
         startidx = (startidx + 1) % buffer.length;
+    }
+
+    public BounceStack(Color[] colors, int bgsize, int delay) {
+        this(colors, Color.WHITE, bgsize, delay);
     }
 
     @Override
