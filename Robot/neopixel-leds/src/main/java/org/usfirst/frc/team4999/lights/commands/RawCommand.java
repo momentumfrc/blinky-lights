@@ -10,9 +10,12 @@ public class RawCommand extends Command {
     /**
      * A command that wraps a raw packet.
      *
-     * @deprecated This class exists only for backwards compatibility with code
-     *             which uses raw packets.
+     * @deprecated This class should not be used. It exists only for backwards
+     * compatibility with code which uses raw packets.
+     *
+     * @param packet the raw packet to be wrapped
      */
+    @Deprecated
     public RawCommand(Packet packet) {
         this.packet = packet;
     }
