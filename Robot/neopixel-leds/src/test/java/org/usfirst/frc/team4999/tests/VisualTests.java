@@ -40,6 +40,42 @@ public class VisualTests {
             new BounceStack(rainbowcolors, 14, 40) },
             new int[] { 5000, 5000, 10000, 10000, 10000 }
         );
-        guiShowAnimation(rainbow, 2000);
+        guiShowAnimation(rainbow, 6000);
+    }
+
+    @Test
+    public void testRainbowAnimation2() {
+        Color[] rainbowcolors = {
+            new Color(72, 21, 170),
+            new Color(55, 131, 255),
+            new Color(77, 233, 76),
+            new Color(255, 238, 0),
+            new Color(255, 140, 0),
+            new Color(246, 0, 0)
+        };
+
+        Color[] rainbowTails = ColorTools.getColorTails(rainbowcolors, Color.BLACK, 12, 20);
+
+        Animation rainbow = new AnimationSequence(
+            new AnimationSequence.AnimationSequenceMember[] {
+                new AnimationSequence.AnimationSequenceMember(
+                    new Snake(rainbowTails, 10),
+                    5000
+                ),
+                new AnimationSequence.AnimationSequenceMember(
+                    new Snake(ColorTools.getSmearedColors(rainbowcolors, 16), 50),
+                    5000
+                ),
+                new AnimationSequence.AnimationSequenceMember(
+                    new BounceStack(ColorTools.getSmearedColors(rainbowcolors, 3), Color.BLACK, 32, 15),
+                    8000
+                ),
+                new AnimationSequence.AnimationSequenceMember(
+                    new Fade(rainbowcolors, 100, 20),
+                    5000
+                )
+        });
+
+        guiShowAnimation(rainbow, 4000);
     }
 }
