@@ -2,7 +2,6 @@ package org.usfirst.frc.team4999.tests;
 
 import org.junit.Test;
 import org.usfirst.frc.team4999.lights.animations.*;
-import org.usfirst.frc.team4999.tools.CommonTests;
 import org.usfirst.frc.team4999.lights.*;
 
 import static org.junit.Assert.assertThrows;
@@ -161,6 +160,21 @@ public class AnimationTest {
 
         Animation gradient4 = new Snake(ColorTools.getSmearedColors(rainbowcolors, 20), 50);
         headlessCompareToFile(gradient4, 180, "SmearAnimation2");
+    }
+
+    @Test
+    public void testAnimationSequence() {
+        Animation solid = new Solid(new Color[] { Color.RED, Color.GREEN, Color.BLUE});
+        Animation fade = new Fade(new Color[] { Color.RED, Color.GREEN, Color.BLUE}, 1000, 0);
+
+        Animation sequence = new AnimationSequence(
+            new AnimationSequence.AnimationSequenceMember[] {
+                new AnimationSequence.AnimationSequenceMember(solid, 1000),
+                new AnimationSequence.AnimationSequenceMember(fade, 4000)
+            }
+        );
+
+        headlessCompareToFile(sequence, 300, "AnimationSequence1");
     }
 
     /*
