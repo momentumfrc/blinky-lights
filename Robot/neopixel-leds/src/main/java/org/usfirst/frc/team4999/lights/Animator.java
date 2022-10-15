@@ -14,6 +14,9 @@ class AnimatorThread extends Thread {
 
     private ShowCommand showCommand = new ShowCommand();
 
+    // Modifier intentionally omitted - I want the default package visibility
+    boolean warnLoopOverrun;
+
     public AnimatorThread(Display out, Animation current) {
         super("Animator Thread");
         this.out = out;
@@ -48,6 +51,8 @@ class AnimatorThread extends Thread {
                 } catch (InterruptedException e) {
                     break;
                 }
+            } else if(warnLoopOverrun) {
+                System.out.format("\u001B[31mLED clock lag (overrun of %dms)\u001B[37m\n", -delay);
             }
         }
     }
@@ -102,5 +107,9 @@ public class Animator {
      */
     public void stopAnimation() {
         animate.interrupt();
+    }
+
+    public void setWarnOnLoopOverrun(boolean shouldWarn) {
+        this.animate.warnLoopOverrun = shouldWarn;
     }
 }
