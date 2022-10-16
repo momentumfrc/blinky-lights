@@ -9,7 +9,7 @@ import org.usfirst.frc.team4999.lights.animations.Solid;
 import org.usfirst.frc.team4999.lights.commands.Command;
 import org.usfirst.frc.team4999.lights.commands.ShowCommand;
 
-public class TestAnimator extends Animator {
+public class TestAnimator implements Animator {
 
     private Animation current;
     public final Display display;
@@ -21,14 +21,12 @@ public class TestAnimator extends Animator {
      * @param pixels Display to output to
      */
     public TestAnimator(Display display) {
-        super(null);
         this.display = display;
         setAnimation(new Solid(Color.BLACK));
     }
 
     /**
-     * Set the animation run on the AnimationThread
-     * @param newAnimation
+     * {@inheritDoc}
      */
     @Override
     public void setAnimation(Animation newAnimation) {

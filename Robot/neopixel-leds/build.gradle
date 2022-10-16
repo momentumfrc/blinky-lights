@@ -23,7 +23,7 @@ dependencies {
 }
 
 group = 'org.usfirst.frc.team4999'
-version = '1.11.1'
+version = '1.12'
 description = 'neopixel-leds'
 java {
     sourceCompatibility = JavaVersion.VERSION_11

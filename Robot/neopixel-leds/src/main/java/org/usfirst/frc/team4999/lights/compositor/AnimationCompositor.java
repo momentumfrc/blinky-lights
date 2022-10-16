@@ -121,7 +121,7 @@ public class AnimationCompositor {
 
     /**
      * Get an Animation showing the composited Views. The resulting Animation is ready to be passed
-     * to the {@link org.usfirst.frc.team4999.lights.Animator}
+     * to the {@link org.usfirst.frc.team4999.lights.AsyncAnimator}
      * @return The composited Animation
      */
     public Animation getCurrentAnimation() {

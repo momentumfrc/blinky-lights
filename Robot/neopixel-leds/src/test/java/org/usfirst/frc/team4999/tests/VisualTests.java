@@ -1,8 +1,11 @@
 package org.usfirst.frc.team4999.tests;
 
+import java.awt.GraphicsEnvironment;
+
 import org.junit.Test;
 import org.usfirst.frc.team4999.lights.*;
 import org.usfirst.frc.team4999.lights.animations.*;
+import org.usfirst.frc.team4999.tools.gui.BufferShower;
 
 import static org.usfirst.frc.team4999.tools.CommonTests.guiShowAnimation;
 
@@ -77,5 +80,41 @@ public class VisualTests {
         });
 
         guiShowAnimation(rainbow, 4000);
+    }
+
+    @Test
+    public void testSynchronousAnimator() {
+        BufferDisplay display = new BufferDisplay(80);
+        SynchronousAnimator animator = new SynchronousAnimator(display);
+
+        if(GraphicsEnvironment.isHeadless()) {
+            return;
+        }
+
+        BufferShower gui = new BufferShower();
+        BrightnessFilter.setBrightness(1);
+        display.addBufferListener(gui);
+
+        Color[] rainbowcolors = {
+            new Color(72, 21, 170),
+            new Color(55, 131, 255),
+            new Color(77, 233, 76),
+            new Color(255, 238, 0),
+            new Color(255, 140, 0),
+            new Color(246, 0, 0)
+        };
+
+        Color[] rainbowTails = ColorTools.getColorTails(rainbowcolors, Color.BLACK, 12, 20);
+
+        Animation animation = new Snake(rainbowTails, 10);
+        animator.setAnimation(animation);
+        for(int i = 0; i < 3000; ++i) {
+            animator.animatePeriodic();;
+            try {
+                Thread.sleep(2);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

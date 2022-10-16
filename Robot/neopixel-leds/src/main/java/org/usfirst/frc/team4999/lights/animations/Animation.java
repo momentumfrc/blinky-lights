@@ -4,7 +4,7 @@ import org.usfirst.frc.team4999.lights.commands.Command;
 
 /**
  * Animations are used by the
- * {@link org.usfirst.frc.team4999.lights.Animator Animator}
+ * {@link org.usfirst.frc.team4999.lights.AsyncAnimator Animator}
  * to determine what colors will be displayed on the LEDs at any moment in time.
  * <p>
  * Animations are defined as follows. First, the Animator uses
