@@ -23,9 +23,7 @@ class I2CDisplay : AutoCloseable, Display {
             val config = I2C.newConfigBuilder(context)
                 // id - some unique identifier for this resource
                 .id("NeoPixels")
-                // bus - the speed at which the i2c bus will run
-                // 0 means 100kb/s
-                .bus(0)
+                .bus(1)
                 // device - the i2c address of the target chip
                 .device(I2C_ADDRESS).build()
             i2c = provider.create(config)
