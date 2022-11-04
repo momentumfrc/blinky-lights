@@ -33,7 +33,7 @@ dependencies {
     // Use the Kotlin JDK 8 standard library.
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
 
-    implementation "org.usfirst.frc.team4999:neopixel-leds:1.12"
+    implementation "org.usfirst.frc.team4999:neopixel-leds:2.0"
 
     implementation 'com.pi4j:pi4j-core:2.2.1'
     implementation 'com.pi4j:pi4j-plugin-raspberrypi:2.2.1'
