@@ -47,6 +47,7 @@ publish {
 
 test {
     finalizedBy jacocoTestReport
+    outputs.upToDateWhen{false}
 }
 
 jacocoTestReport {
