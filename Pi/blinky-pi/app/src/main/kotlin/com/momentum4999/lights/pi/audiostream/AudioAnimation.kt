@@ -1,6 +1,6 @@
 package com.momentum4999.lights.pi.audiostream
 
-import com.momentum4999.lights.pi.rainbowcolors
+import com.momentum4999.lights.pi.App.Companion.rainbowcolors
 import org.usfirst.frc.team4999.lights.Color
 import org.usfirst.frc.team4999.lights.animations.Animation
 import org.usfirst.frc.team4999.lights.commands.Command
