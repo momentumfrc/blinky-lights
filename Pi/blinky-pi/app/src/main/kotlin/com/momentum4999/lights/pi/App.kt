@@ -1,5 +1,7 @@
 package com.momentum4999.lights.pi
 
+import com.momentum4999.lights.pi.audiostream.AudioAnimation
+import com.momentum4999.lights.pi.audiostream.AudioInfoSource
 import org.usfirst.frc.team4999.lights.BlockingAnimator
 import org.usfirst.frc.team4999.lights.Color
 import org.usfirst.frc.team4999.lights.ColorTools
@@ -38,11 +40,15 @@ fun getDefaultAnimation(): Animation {
 
 fun main() {
     // I2CDisplay().use {
-    TerminalDisplay().also {
-        val animation = getDefaultAnimation()
-        val animator = BlockingAnimator(it, animation)
+    TerminalDisplay().also { display ->
+        //val animation = getDefaultAnimation()
+        AudioInfoSource().use { infoSource ->
+            val animation = AudioAnimation(infoSource)
+            val animator = BlockingAnimator(display, animation)
 
-        animator.animate()
+            animator.animate()
+        }
+
     }
 
 

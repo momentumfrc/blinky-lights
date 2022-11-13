@@ -31,6 +31,9 @@ class AudioInfoSource : AutoCloseable {
     }
 
     fun getInfo(info: AudioInfo): Unit {
+        if(dataStream.available() < 3) {
+            return
+        }
         dataStream.readNBytes(dataBuff, 0, 3)
 
         dataByteBuff.rewind()
