@@ -24,9 +24,9 @@ jobs:
         java-version: 11
     - name: Generate javadoc
       run: ./gradlew javadoc
-      working-directory: ./master/Robot/neopixel-leds
+      working-directory: ./master/Robot/blinky-lights
     - name: Copy javadoc
-      run: cp -r ./master/Robot/neopixel-leds/build/docs/javadoc ./gh-pages/
+      run: cp -r ./master/Robot/blinky-lights/neopixel-leds/build/docs/javadoc ./gh-pages/
     - name: Commit updated javadoc
       uses: EndBug/add-and-commit@v9
       with:

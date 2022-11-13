@@ -15,5 +15,5 @@ jobs:
         java-version: 11
     - name: Build with Gradle
       run: ./gradlew test
-      working-directory: ./Robot/neopixel-leds
+      working-directory: ./Robot/blinky-lights
 
