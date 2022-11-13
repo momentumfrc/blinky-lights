@@ -2,6 +2,8 @@ package com.momentum4999.lights.pi
 
 import com.momentum4999.lights.pi.audiostream.AudioAnimation
 import com.momentum4999.lights.pi.audiostream.AudioInfoSource
+import edu.wpi.first.networktables.EntryListenerFlags
+import edu.wpi.first.networktables.NetworkTableInstance
 import org.usfirst.frc.team4999.lights.Animator
 import org.usfirst.frc.team4999.lights.BlockingAnimator
 import org.usfirst.frc.team4999.lights.Color
@@ -20,6 +22,8 @@ class App {
             Color(255, 140, 0),
             Color(246, 0, 0)
         )
+
+        val TEAM = 4999
     }
 
     private interface RunMode {
@@ -90,6 +94,21 @@ class App {
         currentMode?.setUp(animator)
     }
 
+    private fun setupNetworkTables() {
+        val instance = NetworkTableInstance.getDefault()
+        val table = instance.getTable("leds")
+        val modeEntry = table.getEntry("run_mode")
+        instance.startClientTeam(TEAM)
+
+        if(!modeEntry.exists()) {
+            modeEntry.setString("default")
+        }
+
+        modeEntry.addListener({ notification ->
+            setRunMode(notification.value.string)
+        }, EntryListenerFlags.kUpdate or EntryListenerFlags.kNew or EntryListenerFlags.kImmediate)
+    }
+
     fun main() {
         // I2CDisplay().use { display ->
         TerminalDisplay().also { display ->
@@ -97,6 +116,7 @@ class App {
             this.animator = animator
 
             setRunMode("default")
+            setupNetworkTables()
 
             animator.animate()
         }

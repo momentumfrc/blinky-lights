@@ -39,8 +39,9 @@ dependencies {
     implementation 'com.pi4j:pi4j-plugin-raspberrypi:2.2.1'
     implementation 'com.pi4j:pi4j-plugin-pigpio:2.2.1'
 
+    implementation 'edu.wpi.first.wpiutil:wpiutil-java:2022.4.1'
     implementation 'edu.wpi.first.ntcore:ntcore-java:2022.4.1'
-    implementation 'edu.wpi.first.ntcore:ntcore-jni:2022.4.1:linuxraspbian'
+    implementation 'edu.wpi.first.ntcore:ntcore-jni:2022.4.1:linuxaarch64bionic'
 
     // Use the Kotlin test library.
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
