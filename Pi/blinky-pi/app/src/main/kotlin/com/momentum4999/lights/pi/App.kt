@@ -99,13 +99,26 @@ class App {
         val table = instance.getTable("leds")
         val modeEntry = table.getEntry("run_mode")
         instance.startClientTeam(TEAM)
+        val btEntry = table.getEntry("enable_bluetooth")
 
         if(!modeEntry.exists()) {
             modeEntry.setString("default")
         }
 
+        if(!btEntry.exists()) {
+            btEntry.setBoolean(true)
+        }
+
         modeEntry.addListener({ notification ->
             setRunMode(notification.value.string)
+        }, EntryListenerFlags.kUpdate or EntryListenerFlags.kNew or EntryListenerFlags.kImmediate)
+
+        btEntry.addListener({ notification ->
+            if(notification.value.boolean) {
+                BluetoothManager.enable()
+            } else {
+                BluetoothManager.disable()
+            }
         }, EntryListenerFlags.kUpdate or EntryListenerFlags.kNew or EntryListenerFlags.kImmediate)
     }
 
