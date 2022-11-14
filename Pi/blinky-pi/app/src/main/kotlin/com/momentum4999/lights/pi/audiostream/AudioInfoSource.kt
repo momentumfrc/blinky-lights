@@ -18,6 +18,8 @@ class AudioInfoSource : AutoCloseable {
     private var dataBuff = byteArrayOf(0, 0, 0)
     private var dataByteBuff = ByteBuffer.wrap(dataBuff).order(ByteOrder.LITTLE_ENDIAN)
 
+    private var closed = false
+
     init {
         val builder = ProcessBuilder("/home/jordan/blinky-lights/Pi/audio-shim/shim")
         builder.redirectOutput(ProcessBuilder.Redirect.PIPE)
@@ -27,10 +29,17 @@ class AudioInfoSource : AutoCloseable {
     }
 
     override fun close() {
+        closed = true
         subprocess.destroy()
+        // Yeah, this is gross. But the shim processes were living on even after being destroyed, and this is
+        // a solution that works.
+        ProcessBuilder("pkill", "shim").inheritIO().start().waitFor()
     }
 
-    fun getInfo(info: AudioInfo): Unit {
+    fun getInfo(info: AudioInfo) {
+        if(closed) {
+            return
+        }
         if(dataStream.available() < 3) {
             return
         }
