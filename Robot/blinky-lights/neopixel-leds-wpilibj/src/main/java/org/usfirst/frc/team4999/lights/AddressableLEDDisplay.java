@@ -5,6 +5,11 @@ import org.usfirst.frc.team4999.lights.commands.Command;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 
+/**
+ * Class to communicate with a strip of NeoPixel LEDs directly using the roborio's PWM ports
+ * @author Jordan
+ *
+ */
 public class AddressableLEDDisplay implements Display {
     private final AddressableLED leds;
     private final AddressableLEDBuffer buffer;
