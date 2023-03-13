@@ -73,7 +73,7 @@ uint8_t payload[MAX_PAYLOAD];
 uint32_t lastPacket;
 
 const int RECV_BUFF_SIZE = MAX_PAYLOAD * 4;
-uint8_t recvBuff[RECV_BUFF_SIZE];
+volatile uint8_t recvBuff[RECV_BUFF_SIZE];
 volatile int recvQueueHead = 0;
 volatile int recvQueueTail = 0;
 
@@ -81,7 +81,7 @@ volatile int recvQueueTail = 0;
 // so we have to manually interface with the SPI hardware
 // See: https://arduino.stackexchange.com/questions/76528/spi-slave-programming-for-arduino
 ISR(SPI_STC_vect) {
-  volatile int nextQueueTail = (recvQueueTail + 1) % RECV_BUFF_SIZE;
+  int nextQueueTail = (recvQueueTail + 1) % RECV_BUFF_SIZE;
 
   // If the receive buffer has filled, ignore all incoming data until
   // space is available.
