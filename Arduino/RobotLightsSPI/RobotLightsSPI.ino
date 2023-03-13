@@ -101,9 +101,7 @@ void setup() {
   pinMode(MOSI, INPUT);
   pinMode(SS, INPUT);
 
-  SPCR = 0;
-  SPCR |= _BV(SPE);
-  SPCR |= _BV(SPIE);
+  SPCR = _BV(SPE) | _BV(SPIE);
 
   wdt_enable(WDTO_500MS); // Set the watchdog timer to 500ms
 }
