@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":42,"i1":42};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -135,9 +135,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd><code><a href="Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a></code></dd>
 </dl>
 <hr>
-<pre>public class <span class="typeNameLabel">SocketListener</span>
+<pre>@Deprecated(forRemoval=true,
+            since="3.0")
+public class <span class="typeNameLabel">SocketListener</span>
 extends java.lang.Object
 implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a></pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
 </li>
 </ul>
 </div>
@@ -159,11 +162,15 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">SocketListener</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
+&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int)">SocketListener</a></span>&#8203;(int&nbsp;port)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
+&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -177,7 +184,7 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
@@ -187,6 +194,7 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFrameDelayMilliseconds()">getFrameDelayMilliseconds</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
 <div class="block">Gets time to wait before calling getNextFrame.</div>
 </td>
 </tr>
@@ -194,6 +202,7 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 <td class="colFirst"><code><a href="../commands/Command.html" title="class in org.usfirst.frc.team4999.lights.commands">Command</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNextFrame()">getNextFrame</a></span>()</code></th>
 <td class="colLast">
+<div class="block"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
 <div class="block">Gets the sequence of commands that should be used to build the current
  frame of the animation.</div>
 </td>
@@ -229,6 +238,7 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 <li class="blockList">
 <h4>SocketListener</h4>
 <pre>public&nbsp;SocketListener()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
 </li>
 </ul>
 <a id="&lt;init&gt;(int)">
@@ -238,6 +248,7 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 <li class="blockList">
 <h4>SocketListener</h4>
 <pre>public&nbsp;SocketListener&#8203;(int&nbsp;port)</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
 </li>
 </ul>
 </li>
@@ -257,6 +268,7 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 <li class="blockList">
 <h4>getNextFrame</h4>
 <pre class="methodSignature">public&nbsp;<a href="../commands/Command.html" title="class in org.usfirst.frc.team4999.lights.commands">Command</a>[]&nbsp;getNextFrame()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="Animation.html#getNextFrame()">Animation</a></code></span></div>
 <div class="block">Gets the sequence of commands that should be used to build the current
  frame of the animation.</div>
@@ -275,6 +287,7 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 <li class="blockList">
 <h4>getFrameDelayMilliseconds</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;getFrameDelayMilliseconds()</pre>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span></div>
 <div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="Animation.html#getFrameDelayMilliseconds()">Animation</a></code></span></div>
 <div class="block">Gets time to wait before calling getNextFrame.</div>
 <dl>

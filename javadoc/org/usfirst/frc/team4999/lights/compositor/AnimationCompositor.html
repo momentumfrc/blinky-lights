@@ -88,7 +88,7 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
@@ -133,7 +133,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <hr>
 <pre>public class <span class="typeNameLabel">AnimationCompositor</span>
 extends java.lang.Object</pre>
-<div class="block">Composes component <a href="View.html" title="interface in org.usfirst.frc.team4999.lights.compositor"><code>Views</code></a> into one
+<div class="block">Composes component <a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor"><code>Views</code></a> into one
  <a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations"><code>Animation</code></a>,
  and sends the composed Animation to the
  <a href="../Animator.html" title="interface in org.usfirst.frc.team4999.lights"><code>Animator</code></a>.</div>
@@ -143,6 +143,31 @@ extends java.lang.Object</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<section>
+<ul class="blockList">
+<li class="blockList"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a></span></code></th>
+<td class="colLast">
+<div class="block">A view represents a layer in the animation compositor stack.</div>
+</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section>
 <ul class="blockList">
@@ -158,11 +183,15 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">AnimationCompositor</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Instantiate an AnimationCompositor without an associated Animator.</div>
+</td>
 </tr>
 <tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.usfirst.frc.team4999.lights.Animator)">AnimationCompositor</a></span>&#8203;(<a href="../Animator.html" title="interface in org.usfirst.frc.team4999.lights">Animator</a>&nbsp;animator)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">Instantiate an AnimationCompositor with an associated Animator.</div>
+</td>
 </tr>
 </table>
 </li>
@@ -190,40 +219,43 @@ extends java.lang.Object</pre>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="View.html" title="interface in org.usfirst.frc.team4999.lights.compositor">View</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getView(java.lang.String)">getView</a></span>&#8203;(java.lang.String&nbsp;key)</code></th>
+<td class="colFirst"><code><a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOpaqueView(org.usfirst.frc.team4999.lights.animations.Animation)">getOpaqueView</a></span>&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation)</code></th>
 <td class="colLast">
-<div class="block">Get a shown view</div>
+<div class="block">Get an opaque view for an animation at a default z-index.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hideView(java.lang.String)">hideView</a></span>&#8203;(java.lang.String&nbsp;key)</code></th>
+<td class="colFirst"><code><a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getOpaqueView(org.usfirst.frc.team4999.lights.animations.Animation,int)">getOpaqueView</a></span>&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation,
+             int&nbsp;zIndex)</code></th>
 <td class="colLast">
-<div class="block">Remove a view from the compositor.</div>
+<div class="block">Get an opaque view for an animation at a specified z-index.</div>
 </td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#showView(java.lang.String,org.usfirst.frc.team4999.lights.compositor.View)">showView</a></span>&#8203;(java.lang.String&nbsp;key,
-        <a href="View.html" title="interface in org.usfirst.frc.team4999.lights.compositor">View</a>&nbsp;view)</code></th>
+<td class="colFirst"><code><a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTransparentView(org.usfirst.frc.team4999.lights.animations.Animation)">getTransparentView</a></span>&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation)</code></th>
 <td class="colLast">
-<div class="block">Show a view in the compositor on top of all other views</div>
+<div class="block">Get a transparent view for an animation at a default z-index.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#showView(java.lang.String,org.usfirst.frc.team4999.lights.compositor.View,int)">showView</a></span>&#8203;(java.lang.String&nbsp;key,
-        <a href="View.html" title="interface in org.usfirst.frc.team4999.lights.compositor">View</a>&nbsp;view,
-        int&nbsp;z_idx)</code></th>
+<td class="colFirst"><code><a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTransparentView(org.usfirst.frc.team4999.lights.animations.Animation,int)">getTransparentView</a></span>&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation,
+                  int&nbsp;zIndex)</code></th>
 <td class="colLast">
-<div class="block">Show a view in the compositor.</div>
+<div class="block">Get a transparent view for an animation at a specified z-index.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#updateAnimator()">updateAnimator</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colFirst"><code><a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getView(org.usfirst.frc.team4999.lights.animations.Animation,int,boolean)">getView</a></span>&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation,
+       int&nbsp;zIndex,
+       boolean&nbsp;isTransparent)</code></th>
+<td class="colLast">
+<div class="block">Get a view associated with this compositor at the specified z-index.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -256,6 +288,8 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>AnimationCompositor</h4>
 <pre>public&nbsp;AnimationCompositor&#8203;(<a href="../Animator.html" title="interface in org.usfirst.frc.team4999.lights">Animator</a>&nbsp;animator)</pre>
+<div class="block">Instantiate an AnimationCompositor with an associated Animator. The AnimationCompositor will automatically
+ propagate changes to the LEDs via the associated Animator.</div>
 </li>
 </ul>
 <a id="&lt;init&gt;()">
@@ -265,6 +299,10 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>AnimationCompositor</h4>
 <pre>public&nbsp;AnimationCompositor()</pre>
+<div class="block">Instantiate an AnimationCompositor without an associated Animator.
+ <br>
+ NOTE: AnimationCompositors not associated with an animator will not automatically propagate changes
+ to the LEDs. The caller is expected to use <a href="#getCurrentAnimation()"><code>getCurrentAnimation()</code></a> whenever an animation changes.</div>
 </li>
 </ul>
 </li>
@@ -277,62 +315,119 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="showView(java.lang.String,org.usfirst.frc.team4999.lights.compositor.View)">
+<a id="getOpaqueView(org.usfirst.frc.team4999.lights.animations.Animation)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>showView</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;showView&#8203;(java.lang.String&nbsp;key,
-                     <a href="View.html" title="interface in org.usfirst.frc.team4999.lights.compositor">View</a>&nbsp;view)</pre>
-<div class="block">Show a view in the compositor on top of all other views</div>
+<h4>getOpaqueView</h4>
+<pre class="methodSignature">public&nbsp;<a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a>&nbsp;getOpaqueView&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation)</pre>
+<div class="block">Get an opaque view for an animation at a default z-index.
+ <br>
+ NOTE: the default z-index is an incrementing integer starting at 1. Be sure not to create conflicts with
+ manually defined z-indices.
+ <br>
+ Refer to <a href="#getView(org.usfirst.frc.team4999.lights.animations.Animation,int,boolean)"><code>getView(Animation, int, boolean)</code></a> for more details.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - The key referring to this view</dd>
-<dd><code>view</code> - The view to show</dd>
+<dd><code>animation</code> - The animation to show</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The view</dd>
 </dl>
 </li>
 </ul>
-<a id="showView(java.lang.String,org.usfirst.frc.team4999.lights.compositor.View,int)">
+<a id="getTransparentView(org.usfirst.frc.team4999.lights.animations.Animation)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>showView</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;showView&#8203;(java.lang.String&nbsp;key,
-                     <a href="View.html" title="interface in org.usfirst.frc.team4999.lights.compositor">View</a>&nbsp;view,
-                     int&nbsp;z_idx)</pre>
-<div class="block">Show a view in the compositor.
- <p>
- The z_idx value controls the vertical stacking of overlapping views. Views with
- a higher z_idx will be shown over views with a lower z_idx. NOTE: The order of
- overlapping views with equal z_idx values is undefined.</div>
+<h4>getTransparentView</h4>
+<pre class="methodSignature">public&nbsp;<a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a>&nbsp;getTransparentView&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation)</pre>
+<div class="block">Get a transparent view for an animation at a default z-index.
+ <br>
+ NOTE: the default z-index is an incrementing integer starting at 1. Be sure not to create conflicts with
+ manually defined z-indices.
+ <br>
+ Refer to <a href="#getView(org.usfirst.frc.team4999.lights.animations.Animation,int,boolean)"><code>getView(Animation, int, boolean)</code></a> for more details.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - The key referring to this view</dd>
-<dd><code>view</code> - The view to show</dd>
-<dd><code>z_idx</code> - The value controlling the vertical stacking of overlapping views</dd>
+<dd><code>animation</code> - The animation to show</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The view</dd>
 </dl>
 </li>
 </ul>
-<a id="hideView(java.lang.String)">
+<a id="getOpaqueView(org.usfirst.frc.team4999.lights.animations.Animation,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>hideView</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;hideView&#8203;(java.lang.String&nbsp;key)</pre>
-<div class="block">Remove a view from the compositor.</div>
+<h4>getOpaqueView</h4>
+<pre class="methodSignature">public&nbsp;<a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a>&nbsp;getOpaqueView&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation,
+                                              int&nbsp;zIndex)</pre>
+<div class="block">Get an opaque view for an animation at a specified z-index.
+ <br>
+ Refer to <a href="#getView(org.usfirst.frc.team4999.lights.animations.Animation,int,boolean)"><code>getView(Animation, int, boolean)</code></a> for more details.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - The key referring to the view to remove</dd>
+<dd><code>animation</code> - The animation to show</dd>
+<dd><code>zIndex</code> - The z-index</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The view</dd>
+</dl>
+</li>
+</ul>
+<a id="getTransparentView(org.usfirst.frc.team4999.lights.animations.Animation,int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getTransparentView</h4>
+<pre class="methodSignature">public&nbsp;<a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a>&nbsp;getTransparentView&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation,
+                                                   int&nbsp;zIndex)</pre>
+<div class="block">Get a transparent view for an animation at a specified z-index.
+ <br>
+ Refer to <a href="#getView(org.usfirst.frc.team4999.lights.animations.Animation,int,boolean)"><code>getView(Animation, int, boolean)</code></a> for more details.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>animation</code> - The animation to show</dd>
+<dd><code>zIndex</code> - The z-index</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The view</dd>
+</dl>
+</li>
+</ul>
+<a id="getView(org.usfirst.frc.team4999.lights.animations.Animation,int,boolean)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>getView</h4>
+<pre class="methodSignature">public&nbsp;<a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor">AnimationCompositor.View</a>&nbsp;getView&#8203;(<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;animation,
+                                        int&nbsp;zIndex,
+                                        boolean&nbsp;isTransparent)</pre>
+<div class="block">Get a view associated with this compositor at the specified z-index.
+ <br>
+ NOTE: Views are unique per z-index. If conflicting z-indices are detected, the more recent view will
+ be kept and the older view will be discarded.
+ <br>
+ Refer to <a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor"><code>AnimationCompositor.View</code></a> for more details about views.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>animation</code> - The animation to display in the view</dd>
+<dd><code>zIndex</code> - The z-index priority of the view in the animation stack</dd>
+<dd><code>isTransparent</code> - Whether the animation is expected to fill all pixels</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>The view holding the specified animation at the specified z-index</dd>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="AnimationCompositor.View.html" title="class in org.usfirst.frc.team4999.lights.compositor"><code>AnimationCompositor.View</code></a></dd>
 </dl>
 </li>
 </ul>
 <a id="getCurrentAnimation()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>getCurrentAnimation</h4>
 <pre class="methodSignature">public&nbsp;<a href="../animations/Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>&nbsp;getCurrentAnimation()</pre>
@@ -341,31 +436,6 @@ extends java.lang.Object</pre>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The composited Animation</dd>
-</dl>
-</li>
-</ul>
-<a id="updateAnimator()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>updateAnimator</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;updateAnimator()</pre>
-</li>
-</ul>
-<a id="getView(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getView</h4>
-<pre class="methodSignature">public&nbsp;<a href="View.html" title="interface in org.usfirst.frc.team4999.lights.compositor">View</a>&nbsp;getView&#8203;(java.lang.String&nbsp;key)</pre>
-<div class="block">Get a shown view</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>key</code> - The key referring to the view</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>The view</dd>
 </dl>
 </li>
 </ul>
@@ -420,7 +490,7 @@ extends java.lang.Object</pre>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>

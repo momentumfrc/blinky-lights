@@ -27,8 +27,8 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var data = {"i0":9,"i1":10,"i2":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
 var tableTab = "tableTab";
@@ -185,25 +185,17 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.usfirst.frc.team4999.lights.animations.Animation%5B%5D,int)">AnimationSequence</a></span>&#8203;(<a href="Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>[]&nbsp;animations,
-                 int&nbsp;time)</code></th>
-<td class="colLast">
-<div class="block">Construct an AnimationSequence that will show every animation for the
- same fixed duration.</div>
-</td>
-</tr>
-<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.usfirst.frc.team4999.lights.animations.Animation%5B%5D,int%5B%5D)">AnimationSequence</a></span>&#8203;(<a href="Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>[]&nbsp;animations,
                  int[]&nbsp;times)</code></th>
 <td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
+<div class="block"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecationComment">As of release 1.10, replaced by
- <a href="#%3Cinit%3E(org.usfirst.frc.team4999.lights.animations.AnimationSequence.AnimationSequenceMember%5B%5D)"><code>AnimationSequence(AnimationSequenceMember[])</code></a></div>
+ <a href="#%3Cinit%3E(org.usfirst.frc.team4999.lights.animations.AnimationSequence.AnimationSequenceMember...)"><code>AnimationSequence(AnimationSequenceMember[])</code></a></div>
 </div>
 </td>
 </tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.usfirst.frc.team4999.lights.animations.AnimationSequence.AnimationSequenceMember%5B%5D)">AnimationSequence</a></span>&#8203;(<a href="AnimationSequence.AnimationSequenceMember.html" title="class in org.usfirst.frc.team4999.lights.animations">AnimationSequence.AnimationSequenceMember</a>[]&nbsp;members)</code></th>
+<tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.usfirst.frc.team4999.lights.animations.AnimationSequence.AnimationSequenceMember...)">AnimationSequence</a></span>&#8203;(<a href="AnimationSequence.AnimationSequenceMember.html" title="class in org.usfirst.frc.team4999.lights.animations">AnimationSequence.AnimationSequenceMember</a>...&nbsp;members)</code></th>
 <td class="colLast">
 <div class="block">Construct an AnimationSequence that will show every animation for a
  distinct period of time.</div>
@@ -221,20 +213,29 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 </a>
 <h3>Method Summary</h3>
 <table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th class="colSecond" scope="col">Method</th>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>static <a href="AnimationSequence.html" title="class in org.usfirst.frc.team4999.lights.animations">AnimationSequence</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#forAnimations(int,org.usfirst.frc.team4999.lights.animations.Animation...)">forAnimations</a></span>&#8203;(int&nbsp;time,
+             <a href="Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>...&nbsp;animations)</code></th>
+<td class="colLast">
+<div class="block">Construct an AnimationSequence that will show every animation for the
+ same fixed duration.</div>
+</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFrameDelayMilliseconds()">getFrameDelayMilliseconds</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Gets time to wait before calling getNextFrame.</div>
 </td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../commands/Command.html" title="class in org.usfirst.frc.team4999.lights.commands">Command</a>[]</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNextFrame()">getNextFrame</a></span>()</code></th>
 <td class="colLast">
@@ -266,31 +267,13 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(org.usfirst.frc.team4999.lights.animations.Animation[],int)">
+<a id="&lt;init&gt;(org.usfirst.frc.team4999.lights.animations.AnimationSequence.AnimationSequenceMember...)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>AnimationSequence</h4>
-<pre>public&nbsp;AnimationSequence&#8203;(<a href="Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>[]&nbsp;animations,
-                         int&nbsp;time)</pre>
-<div class="block">Construct an AnimationSequence that will show every animation for the
- same fixed duration.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>animations</code> - the animations which will be shown</dd>
-<dd><code>time</code> - the duration (in milliseconds) for which each animation
- will be shown</dd>
-</dl>
-</li>
-</ul>
-<a id="&lt;init&gt;(org.usfirst.frc.team4999.lights.animations.AnimationSequence.AnimationSequenceMember[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>AnimationSequence</h4>
-<pre>public&nbsp;AnimationSequence&#8203;(<a href="AnimationSequence.AnimationSequenceMember.html" title="class in org.usfirst.frc.team4999.lights.animations">AnimationSequence.AnimationSequenceMember</a>[]&nbsp;members)</pre>
+<pre>public&nbsp;AnimationSequence&#8203;(<a href="AnimationSequence.AnimationSequenceMember.html" title="class in org.usfirst.frc.team4999.lights.animations">AnimationSequence.AnimationSequenceMember</a>...&nbsp;members)</pre>
 <div class="block">Construct an AnimationSequence that will show every animation for a
  distinct period of time.</div>
 <dl>
@@ -305,12 +288,13 @@ implements <a href="Animation.html" title="interface in org.usfirst.frc.team4999
 <ul class="blockListLast">
 <li class="blockList">
 <h4>AnimationSequence</h4>
-<pre>@Deprecated
+<pre>@Deprecated(forRemoval=true,
+            since="1.10")
 public&nbsp;AnimationSequence&#8203;(<a href="Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>[]&nbsp;animations,
                          int[]&nbsp;times)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
+<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated, for removal: This API element is subject to removal in a future version.</span>
 <div class="deprecationComment">As of release 1.10, replaced by
- <a href="#%3Cinit%3E(org.usfirst.frc.team4999.lights.animations.AnimationSequence.AnimationSequenceMember%5B%5D)"><code>AnimationSequence(AnimationSequenceMember[])</code></a></div>
+ <a href="#%3Cinit%3E(org.usfirst.frc.team4999.lights.animations.AnimationSequence.AnimationSequenceMember...)"><code>AnimationSequence(AnimationSequenceMember[])</code></a></div>
 </div>
 <div class="block">Loops through a series of animations
  <p>
@@ -333,6 +317,24 @@ public&nbsp;AnimationSequence&#8203;(<a href="Animation.html" title="interface i
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="forAnimations(int,org.usfirst.frc.team4999.lights.animations.Animation...)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>forAnimations</h4>
+<pre class="methodSignature">public static&nbsp;<a href="AnimationSequence.html" title="class in org.usfirst.frc.team4999.lights.animations">AnimationSequence</a>&nbsp;forAnimations&#8203;(int&nbsp;time,
+                                              <a href="Animation.html" title="interface in org.usfirst.frc.team4999.lights.animations">Animation</a>...&nbsp;animations)</pre>
+<div class="block">Construct an AnimationSequence that will show every animation for the
+ same fixed duration.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>time</code> - the duration (in milliseconds) for which each animation
+ will be shown</dd>
+<dd><code>animations</code> - the animations which will be shown</dd>
+</dl>
+</li>
+</ul>
 <a id="getNextFrame()">
 <!--   -->
 </a>
