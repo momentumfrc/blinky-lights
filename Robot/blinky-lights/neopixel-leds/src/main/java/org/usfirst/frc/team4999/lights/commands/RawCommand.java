@@ -2,7 +2,7 @@ package org.usfirst.frc.team4999.lights.commands;
 
 import org.usfirst.frc.team4999.lights.Packet;
 
-@Deprecated
+@Deprecated(forRemoval = true, since = "3.0")
 public class RawCommand extends Command {
 
     private final Packet packet;

@@ -79,7 +79,7 @@ public class AnimationSequence implements Animation {
      * @param animations the animations which will be shown
      * @param times the time to wait (in milliseconds) for each animation
      */
-    @Deprecated
+    @Deprecated(forRemoval = true, since = "1.10")
     public AnimationSequence(Animation[] animations, int[] times) {
         if (animations.length != times.length)
             throw new IllegalArgumentException("Each animation must have a time set");

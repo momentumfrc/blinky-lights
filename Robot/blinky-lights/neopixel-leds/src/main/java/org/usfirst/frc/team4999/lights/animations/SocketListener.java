@@ -13,6 +13,7 @@ import org.usfirst.frc.team4999.lights.Packet;
 import org.usfirst.frc.team4999.lights.commands.Command;
 import org.usfirst.frc.team4999.lights.commands.RawCommand;
 
+@Deprecated(forRemoval = true, since = "3.0")
 public class SocketListener implements Animation {
 
     private ArrayList<Packet> completedPackets;
