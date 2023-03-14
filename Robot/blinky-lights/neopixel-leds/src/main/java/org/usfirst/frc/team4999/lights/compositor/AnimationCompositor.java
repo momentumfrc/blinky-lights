@@ -1,8 +1,6 @@
 package org.usfirst.frc.team4999.lights.compositor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.TreeSet;
+import java.util.*;
 
 import org.usfirst.frc.team4999.lights.Animator;
 import org.usfirst.frc.team4999.lights.Color;
@@ -17,19 +15,68 @@ import org.usfirst.frc.team4999.lights.animations.Solid;
  * {@link org.usfirst.frc.team4999.lights.Animator Animator}.
  */
 public class AnimationCompositor {
-
     /**
      * The animation which will be shown if no other View occupies that part of the LED strip.
      */
-    private static final Animation base = new Solid(Color.BLACK);
+    private static final Animation BASE_ANIMATION = new Solid(Color.BLACK);
+
+    /**
+     * A view represents a layer in the animation compositor stack. Every view holds an animation and, when
+     * enabled, displays that animation at its associated layer.
+     * <br>
+     * Views are considered either "transparent" or "opaque" depending on the held animation. If a view is opaque, its
+     * held animation is expected to fill all pixels on the LED strip, and any views with a lower z-index priority will
+     * not be rendered. The converse is true if the view is transparent.
+     * <br>
+     * The expected use of this class is for context-sensitive animations in robot code. A subsystem should get a view
+     * from the animation compositor when the subsystem is instantiated. Then, whenever the correct context is detected,
+     * the subsystem will call the {@link #show()} method to show the view's associated animation. Likewise, when the
+     * correct context is not present, the subsystem will call the {@link #hide()} method to hide the view's associated
+     * animation.
+     */
+    public class View {
+        private Animation displayedAnimation;
+        public final boolean hasTransparency;
+
+        private boolean isVisible = true;
+        private View(Animation displayedAnimation, boolean hasTransparency){
+            this.displayedAnimation = displayedAnimation;
+            this.hasTransparency = hasTransparency;
+        }
+
+        public boolean getIsVisible() {
+            return isVisible;
+        }
+
+        public void show() {
+            if(isVisible)
+                return;
+            isVisible = true;
+            updateAnimator();
+        }
+
+        public void hide() {
+            if(!isVisible)
+                return;
+            isVisible = false;
+            updateAnimator();
+        }
+
+        public Animation getDisplayedAnimation() {
+            return displayedAnimation;
+        }
+
+        public void changeAnimation(Animation animation) {
+            this.displayedAnimation = animation;
+            updateAnimator();
+        }
+    }
 
     private static class ViewHolder implements Comparable<ViewHolder> {
-        public final String key;
         public final View view;
         public final int z_idx;
 
-        public ViewHolder(String key, View view, int z_idx) {
-            this.key = key;
+        public ViewHolder(View view, int z_idx) {
             this.view = view;
             this.z_idx = z_idx;
         }
@@ -43,8 +90,7 @@ public class AnimationCompositor {
         public boolean equals(Object o) {
             if(o instanceof ViewHolder) {
                 ViewHolder ovh = (ViewHolder) o;
-                return ovh.key.equals(key)
-                    && ovh.view.equals(ovh)
+                return ovh.view.equals(view)
                     && ovh.z_idx == z_idx;
             }
             return false;
@@ -52,72 +98,116 @@ public class AnimationCompositor {
 
         @Override
         public int hashCode() {
-            return java.util.Objects.hash(key, view, z_idx);
+            return java.util.Objects.hash(view, z_idx);
         }
     }
 
-    private Animator animator;
-
-    private HashMap<String, ViewHolder> animationTable;
+    private final Optional<Animator> animator;
 
     // NOTE: The animationStack is ordered with highest z_idx first
-    private TreeSet<ViewHolder> animationStack;
+    private final TreeSet<ViewHolder> animationStack = new TreeSet<>();
+    private final HashMap<Integer, ViewHolder> viewsByZIndex = new HashMap<>();
 
+    private int defaultZIndex = 1;
+
+    /**
+     * Instantiate an AnimationCompositor with an associated Animator. The AnimationCompositor will automatically
+     * propagate changes to the LEDs via the associated Animator.
+     */
     public AnimationCompositor(Animator animator) {
-        animationTable = new HashMap<>();
-        animationStack = new TreeSet<>();
-
-        this.animator = animator;
+        this.animator = Optional.of(animator);
 
         updateAnimator();
     }
 
+    /**
+     * Instantiate an AnimationCompositor without an associated Animator.
+     * <br>
+     * NOTE: AnimationCompositors not associated with an animator will not automatically propagate changes
+     * to the LEDs. The caller is expected to use {@link #getCurrentAnimation()} whenever an animation changes.
+     */
     public AnimationCompositor() {
-        this(null);
+        this.animator = Optional.empty();
     }
 
     /**
-     * Show a view in the compositor on top of all other views
-     * @param key The key referring to this view
-     * @param view The view to show
+     * Get an opaque view for an animation at a default z-index.
+     * <br>
+     * NOTE: the default z-index is an incrementing integer starting at 1. Be sure not to create conflicts with
+     * manually defined z-indices.
+     * <br>
+     * Refer to {@link #getView(Animation, int, boolean)} for more details.
+     * @param animation The animation to show
+     * @return The view
      */
-    public void showView(String key, View view) {
-        showView(key, view, animationStack.first().z_idx + 1);
+    public View getOpaqueView(Animation animation) {
+        return getOpaqueView(animation, defaultZIndex++);
     }
 
     /**
-     * Show a view in the compositor.
-     * <p>
-     * The z_idx value controls the vertical stacking of overlapping views. Views with
-     * a higher z_idx will be shown over views with a lower z_idx. NOTE: The order of
-     * overlapping views with equal z_idx values is undefined.
-     * @param key The key referring to this view
-     * @param view The view to show
-     * @param z_idx The value controlling the vertical stacking of overlapping views
+     * Get a transparent view for an animation at a default z-index.
+     * <br>
+     * NOTE: the default z-index is an incrementing integer starting at 1. Be sure not to create conflicts with
+     * manually defined z-indices.
+     * <br>
+     * Refer to {@link #getView(Animation, int, boolean)} for more details.
+     * @param animation The animation to show
+     * @return The view
      */
-    public void showView(String key, View view, int z_idx) {
-        if(animationTable.containsKey(key))
-            hideView(key);
-        ViewHolder holder = new ViewHolder(key, view, z_idx);
-        animationTable.put(key, holder);
+    public View getTransparentView(Animation animation) {
+        return getTransparentView(animation, defaultZIndex++);
+    }
+
+    /**
+     * Get an opaque view for an animation at a specified z-index.
+     * <br>
+     * Refer to {@link #getView(Animation, int, boolean)} for more details.
+     * @param animation The animation to show
+     * @param zIndex The z-index
+     * @return The view
+     */
+    public View getOpaqueView(Animation animation, int zIndex) {
+        return getView(animation, zIndex, false);
+    }
+
+    /**
+     * Get a transparent view for an animation at a specified z-index.
+     * <br>
+     * Refer to {@link #getView(Animation, int, boolean)} for more details.
+     * @param animation The animation to show
+     * @param zIndex The z-index
+     * @return The view
+     */
+    public View getTransparentView(Animation animation, int zIndex) {
+        return getView(animation, zIndex, true);
+    }
+
+    /**
+     * Get a view associated with this compositor at the specified z-index.
+     * <br>
+     * NOTE: Views are unique per z-index. If conflicting z-indices are detected, the more recent view will
+     * be kept and the older view will be discarded.
+     * <br>
+     * Refer to {@link AnimationCompositor.View} for more details about views.
+     * @see AnimationCompositor.View
+     * @param animation The animation to display in the view
+     * @param zIndex The z-index priority of the view in the animation stack
+     * @param isTransparent Whether the animation is expected to fill all pixels
+     * @return The view holding the specified animation at the specified z-index
+     */
+    public View getView(Animation animation, int zIndex, boolean isTransparent) {
+        if(viewsByZIndex.containsKey(zIndex)) {
+            viewsByZIndex.remove(zIndex);
+            animationStack.removeIf(it -> it.z_idx == zIndex);
+        }
+        View view = new View(animation, isTransparent);
+        ViewHolder holder = new ViewHolder(view, zIndex);
         animationStack.add(holder);
-
+        viewsByZIndex.put(zIndex, holder);
         updateAnimator();
+        return view;
     }
 
-    /**
-     * Remove a view from the compositor.
-     * @param key The key referring to the view to remove
-     */
-    public void hideView(String key) {
-        if(!animationTable.containsKey(key))
-            return;
-        ViewHolder holder = animationTable.get(key);
-        animationTable.remove(key);
-        animationStack.remove(holder);
-
-        updateAnimator();
-    }
 
     /**
      * Get an Animation showing the composited Views. The resulting Animation is ready to be passed
@@ -127,13 +217,18 @@ public class AnimationCompositor {
     public Animation getCurrentAnimation() {
         ArrayList<Animation> visibleAnimations = new ArrayList<>();
 
+        boolean showBase = true;
         for(ViewHolder vh : animationStack) {
-            visibleAnimations.add(vh.view.getAnimation());
-            if(!vh.view.hasTransparency())
-                break;
+            if(vh.view.getIsVisible()) {
+                visibleAnimations.add(vh.view.getDisplayedAnimation());
+                if(!vh.view.hasTransparency) {
+                    showBase = false;
+                    break;
+                }
+            }
         }
 
-        visibleAnimations.add(base);
+        visibleAnimations.add(BASE_ANIMATION);
 
         Animation[] animationsArray = new Animation[visibleAnimations.size()];
         for(int i = 0; i < animationsArray.length; i++) {
@@ -143,19 +238,7 @@ public class AnimationCompositor {
         return new Overlay(animationsArray);
     }
 
-    public void updateAnimator() {
-        if(animator != null) {
-            animator.setAnimation(getCurrentAnimation());
-        }
+    private void updateAnimator() {
+        animator.ifPresent(value -> value.setAnimation(getCurrentAnimation()));
     }
-
-    /**
-     * Get a shown view
-     * @param key The key referring to the view
-     * @return The view
-     */
-    public View getView(String key) {
-        return animationTable.get(key).view;
-    }
-
 }

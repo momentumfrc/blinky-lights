@@ -7,9 +7,6 @@ import org.usfirst.frc.team4999.lights.BufferDisplay;
 import org.usfirst.frc.team4999.lights.Color;
 import org.usfirst.frc.team4999.lights.animations.*;
 import org.usfirst.frc.team4999.lights.compositor.AnimationCompositor;
-import org.usfirst.frc.team4999.lights.compositor.FullScreenView;
-import org.usfirst.frc.team4999.lights.compositor.View;
-import org.usfirst.frc.team4999.lights.compositor.WindowView;
 
 
 public class CompositorTest {
@@ -28,36 +25,31 @@ public class CompositorTest {
 
         Animation background = new BounceStack(new Color[] {Color.MOMENTUM_PURPLE, Color.MOMENTUM_PURPLE, Color.MOMENTUM_BLUE, Color.MOMENTUM_BLUE}, 8, 40);
 
-        coord.hideView("DNE Animation");
-
-        coord.showView("Background", new FullScreenView(background), 1);
+        var background_view = coord.getOpaqueView(background, 1);
         an.displayFrames(50);
 
-        View greenWindow = new WindowView(new ClippedAnimation(new Solid(Color.GREEN), 15, 30));
-        coord.showView("Green Section", greenWindow, 10);
+        var green_section_view = coord.getTransparentView(new ClippedAnimation(new Solid(Color.GREEN), 15, 30), 10);
         an.displayFrames(50);
 
         Animation rainbow = Snake.rainbowSnake(50);
-        coord.showView("RainbowSnake", new FullScreenView(rainbow), 100);
+        var rainbow_snake_view = coord.getOpaqueView(rainbow, 100);
         an.displayFrames(50);
 
         Animation fader = new Fade(new Color[] {Color.RED, Color.YELLOW, Color.BLUE}, 1000, 100);
-        coord.showView("Fader", WindowView.makeClippedWindow(fader, 5, 25), 500);
+        var fader_view = coord.getTransparentView(new ClippedAnimation(fader, 5, 25), 500);
         an.displayFrames(50);
 
-        coord.hideView("Green Section");
-        coord.showView("Green Section", greenWindow, 700);
+        green_section_view.hide();;
+        var green_section_view_2 = coord.getTransparentView(new ClippedAnimation(new Solid(Color.GREEN), 15, 30), 700);
         an.displayFrames(50);
 
-        coord.hideView("Background");
-        coord.showView("Background", new FullScreenView(new Solid(Color.RED)), 1);
+        background_view.changeAnimation(new Solid(Color.RED));
         an.displayFrames(50);
 
-        coord.hideView("DNE Animation");
 
-        coord.hideView("Fader");
-        coord.hideView("Green Section");
-        coord.hideView("RainbowSnake");
+        fader_view.hide();
+        green_section_view_2.hide();
+        rainbow_snake_view.hide();
         an.displayFrames(10);
 
         //an.display.writeToFile("Coordinator");
@@ -78,29 +70,29 @@ public class CompositorTest {
         an.displayFrames(6);
 
         Animation solid_blue = new Solid(Color.BLUE);
-        coord.showView("Solid Blue", new FullScreenView(solid_blue), 1);
+        AnimationCompositor.View solid_blue_view = coord.getOpaqueView(solid_blue, 1);
         an.displayFrames(6);
 
         Animation solid_rainbow = Solid.rainbow();
-        coord.showView("Rainbow", new FullScreenView(solid_rainbow), 10);
+        AnimationCompositor.View solid_rainbow_view = coord.getOpaqueView(solid_rainbow, 10);
         an.displayFrames(6);
 
         Animation solid_green = new Solid(Color.GREEN);
-        coord.hideView("Solid Blue");
-        coord.showView("Solid Green", new FullScreenView(solid_green), 1);
+        solid_blue_view.hide();
+        AnimationCompositor.View solid_green_view = coord.getOpaqueView(solid_green, 1);
 
-        Animation stack = new Stack(new Color[]{Color.GREEN, Color.BLUE, Color.RED}, 10, 200);
-        coord.showView("Stack", new FullScreenView(stack), 5);
+        Animation stack = new Stack(10, 200, Color.GREEN, Color.BLUE, Color.RED);
+        AnimationCompositor.View stack_view = coord.getOpaqueView(stack, 5);
         an.displayFrames(6);
 
         Animation rainbow_overlay = new ClippedAnimation(Snake.rainbowSnake(200), 5, 25);
-        coord.showView("Rainbow overlay", new WindowView(rainbow_overlay), 20);
+        AnimationCompositor.View rainbow_overlay_view = coord.getTransparentView(rainbow_overlay, 20);
         an.displayFrames(25);
 
-        coord.hideView("Rainbow");
+        solid_rainbow_view.hide();
         an.displayFrames(25);
 
-        coord.hideView("Stack");
+        stack_view.hide();
         an.displayFrames(25);
 
         //an.display.writeToFile("CoordinatorPriorities");
@@ -121,11 +113,11 @@ public class CompositorTest {
         an.displayFrames(6);
 
         Animation solid_blue = new Solid(Color.BLUE);
-        coord.showView("Solid Blue", new FullScreenView(solid_blue), 1);
+        AnimationCompositor.View solid_blue_view = coord.getOpaqueView(solid_blue, 1);
         an.displayFrames(6);
 
         Animation rainbow_overlay = new ClippedAnimation(Snake.rainbowSnake(200), 10, 40);
-        coord.showView("Rainbow Overlay", new FullScreenView(rainbow_overlay), 10);
+        AnimationCompositor.View rainbow_overlay_view = coord.getOpaqueView(rainbow_overlay, 10);
         an.displayFrames(25);
 
         //an.display.writeToFile("CoordinatorFalseTransparency");

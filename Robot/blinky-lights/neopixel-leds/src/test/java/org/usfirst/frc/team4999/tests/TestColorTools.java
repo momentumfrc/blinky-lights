@@ -93,7 +93,7 @@ public class TestColorTools {
         Animation gradient3 = new Solid(ColorTools.getSmearedColors(rainbowcolors, 8));
         headlessCompareToFile(gradient3, 10, "SmearAnimation1");
 
-        Animation gradient4 = new Snake(ColorTools.getSmearedColors(rainbowcolors, 20), 50);
+        Animation gradient4 = new Snake(50, ColorTools.getSmearedColors(rainbowcolors, 20));
         headlessCompareToFile(gradient4, 180, "SmearAnimation2");
     }
 

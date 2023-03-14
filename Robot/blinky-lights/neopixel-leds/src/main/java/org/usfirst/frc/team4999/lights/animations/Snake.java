@@ -55,7 +55,7 @@ public class Snake implements Animation {
                 snake[snake.length - i - 1] = tmp;
             }
         }
-        Snake s = new Snake(snake, msBetweenFrames);
+        Snake s = new Snake(msBetweenFrames, snake);
         s.setReverse(reversed);
         return s;
     }
@@ -74,18 +74,18 @@ public class Snake implements Animation {
                 Color.BLUE,
                 new Color(139,0,255)
         };
-        return new Snake(snake, msBetweenFrames);
+        return new Snake(msBetweenFrames, snake);
     }
 
     private Color[] snakes;
     private int offset, speed, increment = 1;
 
     public Snake(Color[] snakes, int msBetweenFrames, boolean reversed) {
-        this(snakes, msBetweenFrames);
+        this(msBetweenFrames, snakes);
         this.increment = reversed ? -1 : 1;
     }
 
-    public Snake(Color[] snakes, int msBetweenFrames) {
+    public Snake(int msBetweenFrames, Color... snakes) {
         this.snakes = snakes;
         offset = 0;
         speed = msBetweenFrames;
