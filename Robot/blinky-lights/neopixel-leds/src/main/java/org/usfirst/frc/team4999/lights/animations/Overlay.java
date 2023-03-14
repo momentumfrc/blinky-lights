@@ -40,6 +40,10 @@ public class Overlay implements Animation {
      * @param animations the animations to overlay
      */
     public Overlay(Animation... animations) {
+        if(animations.length == 0) {
+            throw new IllegalArgumentException("Must specify at least 1 animation");
+        }
+
         this.animations = new AnimationTiming[animations.length];
         for(int i = 0; i < animations.length; i++) {
             this.animations[i] = new AnimationTiming(animations[i]);
