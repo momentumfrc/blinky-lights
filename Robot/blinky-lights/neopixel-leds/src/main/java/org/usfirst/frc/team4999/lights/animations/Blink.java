@@ -12,10 +12,10 @@ public class Blink implements Animation {
 
     /**
      * Switches between colors
-     * @param colors colors to switch between
      * @param waittime how long to wait before switching color
+     * @param colors colors to switch between
      */
-    public Blink(Color[] colors, int waittime) {
+    public Blink(int waittime, Color... colors) {
         int[] waittimes = new int[colors.length];
         for(int i = 0; i < waittimes.length; i++) {
             waittimes[i] = waittime;

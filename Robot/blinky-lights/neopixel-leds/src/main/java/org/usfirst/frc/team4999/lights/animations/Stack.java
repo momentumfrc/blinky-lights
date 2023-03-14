@@ -21,7 +21,7 @@ public class Stack implements Animation {
     Vector<Command> packetBuffer;
 
 
-    public Stack(Color[] colors, int size, int delay) {
+    public Stack(int size, int delay, Color... colors) {
         this.colors = colors;
         this.delay = delay;
 

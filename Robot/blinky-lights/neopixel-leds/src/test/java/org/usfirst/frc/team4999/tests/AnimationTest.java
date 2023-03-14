@@ -20,7 +20,7 @@ public class AnimationTest {
 
     @Test
     public void testBlinkAnimation() {
-        Animation blink = new Blink(rainbowcolors, 500);
+        Animation blink = new Blink(500, rainbowcolors);
         headlessCompareToFile(blink, 10, "BlinkAnimation");
     }
 
@@ -56,7 +56,7 @@ public class AnimationTest {
 
     @Test
     public void testStackAnimation() {
-        Animation stack = new Stack(rainbowcolors, 25, 40);
+        Animation stack = new Stack(25, 40, rainbowcolors);
         headlessCompareToFile(stack, 625, "StackAnimation");
     }
 

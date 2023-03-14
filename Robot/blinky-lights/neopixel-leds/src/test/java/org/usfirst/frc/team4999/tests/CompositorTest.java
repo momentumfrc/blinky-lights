@@ -89,7 +89,7 @@ public class CompositorTest {
         coord.hideView("Solid Blue");
         coord.showView("Solid Green", new FullScreenView(solid_green), 1);
 
-        Animation stack = new Stack(new Color[]{Color.GREEN, Color.BLUE, Color.RED}, 10, 200);
+        Animation stack = new Stack(10, 200, Color.GREEN, Color.BLUE, Color.RED);
         coord.showView("Stack", new FullScreenView(stack), 5);
         an.displayFrames(6);
 

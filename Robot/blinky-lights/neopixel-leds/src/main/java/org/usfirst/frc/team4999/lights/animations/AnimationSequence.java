@@ -2,6 +2,8 @@ package org.usfirst.frc.team4999.lights.animations;
 
 import org.usfirst.frc.team4999.lights.commands.Command;
 
+import java.util.Arrays;
+
 /**
  * An meta-animation that will sequentially show several other animations.
  */
@@ -16,15 +18,15 @@ public class AnimationSequence implements Animation {
     /**
      * Construct an AnimationSequence that will show every animation for the
      * same fixed duration.
-     * @param animations the animations which will be shown
      * @param time the duration (in milliseconds) for which each animation
      * will be shown
+     * @param animations the animations which will be shown
      */
-    public AnimationSequence(Animation[] animations, int time) {
-        members = new AnimationSequenceMember[animations.length];
-        for(int i = 0; i < animations.length; i++) {
-            members[i] = new AnimationSequenceMember(animations[i], time);
-        }
+    public static AnimationSequence forAnimations(int time, Animation... animations) {
+        AnimationSequenceMember[] members = Arrays.stream(animations)
+                .map(it -> new AnimationSequenceMember(it, time))
+                .toArray(AnimationSequenceMember[]::new);
+        return new AnimationSequence(members);
     }
 
     /**
@@ -61,7 +63,7 @@ public class AnimationSequence implements Animation {
      * distinct period of time.
      * @param members the animations which will be shown
      */
-    public AnimationSequence(AnimationSequenceMember[] members) {
+    public AnimationSequence(AnimationSequenceMember... members) {
         this.members = members;
     }
 

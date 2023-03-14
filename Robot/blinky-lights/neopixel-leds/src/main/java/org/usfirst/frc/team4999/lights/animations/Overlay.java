@@ -39,7 +39,7 @@ public class Overlay implements Animation {
      * animations which occur earlier.
      * @param animations the animations to overlay
      */
-    public Overlay(Animation[] animations) {
+    public Overlay(Animation... animations) {
         this.animations = new AnimationTiming[animations.length];
         for(int i = 0; i < animations.length; i++) {
             this.animations[i] = new AnimationTiming(animations[i]);

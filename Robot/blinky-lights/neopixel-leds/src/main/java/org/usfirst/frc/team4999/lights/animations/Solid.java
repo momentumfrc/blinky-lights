@@ -31,7 +31,7 @@ public class Solid implements Animation {
      * Fills with a pattern of colors
      * @param colors the pattern to paint
      */
-    public Solid(Color[] colors) {
+    public Solid(Color... colors) {
         this.colors = colors;
     }
 

@@ -39,7 +39,7 @@ public class VisualTests {
             Snake.rainbowSnake(70),
             Fade.rainbowFade(100, 20),
             new Bounce(Color.WHITE, rainbowcolors, 50, 50),
-            new Stack(rainbowcolors, 50, 40),
+            new Stack(50, 40, rainbowcolors),
             new BounceStack(rainbowcolors, 14, 40) },
             new int[] { 5000, 5000, 10000, 10000, 10000 }
         );
@@ -62,11 +62,11 @@ public class VisualTests {
         Animation rainbow = new AnimationSequence(
             new AnimationSequence.AnimationSequenceMember[] {
                 new AnimationSequence.AnimationSequenceMember(
-                    new Snake(rainbowTails, 10),
+                    new Snake(10, rainbowTails),
                     5000
                 ),
                 new AnimationSequence.AnimationSequenceMember(
-                    new Snake(ColorTools.getSmearedColors(rainbowcolors, 16), 50),
+                    new Snake(50, ColorTools.getSmearedColors(rainbowcolors, 16)),
                     5000
                 ),
                 new AnimationSequence.AnimationSequenceMember(
@@ -106,7 +106,7 @@ public class VisualTests {
 
         Color[] rainbowTails = ColorTools.getColorTails(rainbowcolors, Color.BLACK, 12, 20);
 
-        Animation animation = new Snake(rainbowTails, 10);
+        Animation animation = new Snake(10, rainbowTails);
         animator.setAnimation(animation);
         for(int i = 0; i < 3000; ++i) {
             animator.animatePeriodic();;
