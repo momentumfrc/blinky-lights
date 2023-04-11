@@ -20,7 +20,7 @@ public class NeoPixels implements Display {
     private static final int MAX_PACKET_SIZE = 16;
 
     private interface NeoPixelsIO {
-        public boolean writePacket(Packet packet);
+        boolean write(byte[] data);
     }
 
     private static class NeoPixelsI2C extends I2C implements NeoPixelsIO {
@@ -31,11 +31,11 @@ public class NeoPixels implements Display {
             buffer = ByteBuffer.allocateDirect(MAX_PACKET_SIZE);
         }
 
-        public boolean writePacket(Packet packet) {
+        public boolean write(byte[] data) {
             buffer.rewind();
-            buffer.put(packet.getData());
+            buffer.put(data);
             buffer.rewind();
-            return writeBulk(buffer, packet.getSize());
+            return writeBulk(buffer, data.length);
         }
 
     }
@@ -55,8 +55,7 @@ public class NeoPixels implements Display {
         }
 
         @Override
-        public boolean writePacket(Packet packet) {
-            var data = packet.getData();
+        public boolean write(byte[] data) {
             for(byte b : data) {
                 buffer.rewind();
                 buffer.put(b);
@@ -130,15 +129,37 @@ public class NeoPixels implements Display {
 
     synchronized public void show(Command[] commands) {
         try {
+            Packet[] packets;
+            int packetIdx = 0;
             // Send a sync packet every SYNC_FREQ frames
             if(++syncidx >= SYNC_FREQ) {
-                strip.writePacket(syncPacket);
+                packets = new Packet[commands.length + 1];
+                packets[packetIdx++] = syncPacket;
                 syncidx = 0;
+            } else {
+                packets = new Packet[commands.length];
             }
 
-            for(Command packet : commands) {
-                strip.writePacket(packet.build());
+            for(Command command : commands) {
+                packets[packetIdx++] = command.build();
             }
+
+            int buffSize = 0;
+            for(Packet packet : packets) {
+                buffSize += packet.getSize();
+            }
+
+            // We coalesce all data to be transferred into a single buffer, since starting/stopping a transmission
+            // can have overhead (for example, the SPI interface has to wait until chip select is asserted before it
+            // can start writing data)
+            byte[] buff = new byte[buffSize];
+            int buffIdx = 0;
+            for(Packet packet : packets) {
+                System.arraycopy(packet.getData(), 0, buff, buffIdx, packet.getSize());
+                buffIdx += packet.getSize();
+            }
+
+            strip.write(buff);
 
         } catch (Exception e) {
             // The generic try-catch prevents an error in the neopixels from killing the whole robot
