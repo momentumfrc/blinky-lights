@@ -43,17 +43,26 @@ public class NeoPixels implements Display {
     private static class NeoPixelsSPI extends SPI implements NeoPixelsIO {
         private final ByteBuffer buffer;
 
+        private static final int SPI_CLOCK_RATE = 100;
+
         public NeoPixelsSPI(Port port) {
             super(port);
             buffer = ByteBuffer.allocateDirect(MAX_PACKET_SIZE);
+
+            setChipSelectActiveLow();
+            setMode(SPI.Mode.kMode0);
+            setClockRate(SPI_CLOCK_RATE);
         }
 
         @Override
         public boolean writePacket(Packet packet) {
-            buffer.rewind();
-            buffer.put(packet.getData());
-            buffer.rewind();
-            return write(buffer, packet.getSize()) == packet.getSize();
+            var data = packet.getData();
+            for(byte b : data) {
+                buffer.rewind();
+                buffer.put(b);
+                write(buffer, 1);
+            }
+            return true;
         }
     }
 
