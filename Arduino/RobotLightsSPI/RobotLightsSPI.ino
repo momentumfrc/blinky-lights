@@ -36,7 +36,7 @@
 // Max pixels on Trinket is 94 due to RAM limits
 
 #if defined(ARDUINO_AVR_UNO)
-#define PIN 1
+#define PIN 6
 #define MAXLEDS 240
 
 #elif defined(ARDUINO_AVR_PRO)
@@ -96,12 +96,14 @@ ISR(SPI_STC_vect) {
 void setup() {
   lastPacket = millis();
 
-  strip.begin();
-
   pinMode(MOSI, INPUT);
+  pinMode(MISO, OUTPUT);
   pinMode(SS, INPUT);
+  pinMode(SCK, INPUT);
 
   SPCR = _BV(SPE) | _BV(SPIE);
+
+  strip.begin();
 
   wdt_enable(WDTO_500MS); // Set the watchdog timer to 500ms
 }
@@ -112,8 +114,10 @@ void loop() {
   readPackets();
 
   // Check for comms timeout from RoboRIO
-  if (millis() - lastPacket > 1000)
+  if (millis() - lastPacket > 1000) {
+    lastPacket = millis();
     showTestPattern();
+  }
 }
 
 void showTestPattern() {
@@ -138,11 +142,11 @@ boolean nextByte(uint8_t& b) {
 }
 
 void readPackets() {
-  static int payloadIx = 0, payloadLen = 0;
+  static int payloadIx = 0;
+  static int payloadLen = 0;
   uint8_t b;
   while (nextByte(b))
   {
-    recvQueueHead = (recvQueueHead + 1) % RECV_BUFF_SIZE;
     if (payloadLen == 0) {
       // start of packet state
       if (b > MAX_PAYLOAD) {
