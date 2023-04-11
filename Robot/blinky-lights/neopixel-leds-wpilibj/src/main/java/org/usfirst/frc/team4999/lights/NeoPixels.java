@@ -2,6 +2,7 @@ package org.usfirst.frc.team4999.lights;
 
 
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.util.EnumMap;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -43,7 +44,7 @@ public class NeoPixels implements Display {
     private static class NeoPixelsSPI extends SPI implements NeoPixelsIO {
         private final ByteBuffer buffer;
 
-        private static final int SPI_CLOCK_RATE = 100;
+        private static final int SPI_CLOCK_RATE = 4_000_000;
 
         public NeoPixelsSPI(Port port) {
             super(port);
@@ -56,11 +57,19 @@ public class NeoPixels implements Display {
 
         @Override
         public boolean write(byte[] data) {
-            for(byte b : data) {
-                buffer.rewind();
-                buffer.put(b);
-                write(buffer, 1);
+            buffer.rewind();
+            for(int i = 0; i < data.length; i += 2) {
+                int value = data[i] << 8;
+                if(i < data.length - 1) {
+                    value |= data[i+1];
+                } else {
+                    value |= 0xFF;
+                }
+                buffer.putShort((short) value);
             }
+
+            write(buffer, (data.length + 1) / 2);
+
             return true;
         }
     }
