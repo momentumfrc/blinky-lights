@@ -16,14 +16,14 @@ repositories {
 
 dependencies {
 	implementation project(':neopixel-leds')
-    implementation 'edu.wpi.first.ntcore:ntcore-java:2020.3.2'
-    implementation 'edu.wpi.first.wpilibj:wpilibj-java:2020.3.2'
+    implementation 'edu.wpi.first.ntcore:ntcore-java:2023.4.2'
+    implementation 'edu.wpi.first.wpilibj:wpilibj-java:2023.4.2'
     testImplementation 'junit:junit:[4.13.1,5.0.0)'
     testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.12.0'
 }
 
 group = 'org.usfirst.frc.team4999'
-version = '2.0'
+version = '3.0'
 description = 'neopixel-leds-wpilibj'
 java {
     sourceCompatibility = JavaVersion.VERSION_11
